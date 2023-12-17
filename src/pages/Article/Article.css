@@ -1,0 +1,103 @@
+#artikel-lainnya,
+#infografis-lainnya {
+    border: 2px solid #14ae5c !important;
+    color: #14ae5c !important;
+}
+
+#artikel-lainnya:hover,
+#infografis-lainnya:hover {
+    background-color: #14ae5c;
+    border: 2px solid #14ae5c !important;
+    color: #ffffff !important;
+}
+
+.wrapperLinkTitleArticles {
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+    text-decoration-color: black;
+}
+
+.wrapperLinkTitleArticles:hover {
+    cursor: pointer;
+    color: black;
+    text-decoration: underline;
+    text-decoration-color: black;
+}
+
+.btnDonasi {
+    background-color: #14ae5c !important;
+    color: #ffffff !important;
+}
+
+.card-artikel {
+    cursor: pointer;
+    background: #ffffff;
+    border: 1px solid #d9d9d9;
+    box-shadow: 0px 8px 24px rgba(112, 144, 176, 0.15);
+    border-radius: 8px;
+    padding-bottom: 10px;
+}
+
+.card-artikel:hover {
+    cursor: pointer;
+    box-shadow: 0px 8px 28px rgba(1, 1, 1, 0.15);
+    border-radius: 8px;
+}
+
+.articlesImage {
+    width: 50% !important;
+}
+
+.paragraf {
+    text-align: justify;
+}
+
+.wrapperLinkTitleArticles {
+    color: black;
+    text-decoration: none;
+    text-decoration-color: black;
+}
+
+.wrapperLinkTitleArticles:hover {
+    color: black;
+    text-decoration: underline;
+    text-decoration-color: black;
+}
+
+.hashTag {
+    color: #006dfd !important;
+}
+
+#dot {
+    height: 7px;
+    width: 7px;
+    background-color: #006dfd;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 0.5em 0.1em 0.5em;
+}
+
+#dot2 {
+    height: 7px;
+    width: 7px;
+    background-color: #6f7376;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.title-article {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.desc-article {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,44 @@
+:root {
+  --color-bg: #ffffff;
+  --color-main: #14ae5c;
+}
+
+.bg-main {
+  background-color: #14ae5c;
+}
+
+/* Footer */
+footer {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  background-color: var(--color-main);
+  padding-bottom: 0%;
+}
+
+.judulDeskripsiGardenPlants {
+  color: #25ff01 !important;
+  text-align: justify;
+}
+
+.deskripsiGardenPlants {
+  text-align: justify;
+}
+
+.container p {
+  color: white;
+}
+
+.col-sm-12.col-md-4 {
+  text-align: justify;
+}
+
+.col-sm-12.col-md-6.text-white {
+  text-align: justify;
+}
+
+/* Media Query */
+
+@media screen and (max-width: 576px) {
+  #medsos {
+    margin-top: 1em;
+  }
+}

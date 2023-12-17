@@ -1,0 +1,85 @@
+.highlight {
+  background-image: url(../../assets/leavesDonation.png);
+}
+
+.wrapperHighlightText {
+  margin: 30% 4em 50% 4em;
+}
+
+.titleHighlight {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 800 !important;
+}
+
+.descHighlight {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 500 !important;
+  text-align: justify;
+}
+
+.wrapperInputDonasi {
+  padding: 0em 2em;
+  margin-top: 8em;
+}
+
+.TitleDonasi,
+.DescDonasi {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 700 !important;
+  text-align: justify;
+}
+
+.btn-50k,
+.btn-100k,
+.btn-150k {
+  border: 1px solid #14ae5c !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 700 !important;
+}
+
+.titleInputName,
+.titleInputNoTel,
+.titleEmail,
+.titleNomorRekening {
+  text-align: justify;
+}
+
+.btn-50k:hover,
+.btn-100k:hover,
+.btn-150k:hover {
+  background-color: #14ae5c !important;
+  color: white !important;
+}
+
+.btn-50k:focus,
+.btn-100k:focus,
+.btn-150k:focus {
+  background-color: #14ae5c !important;
+  color: white !important;
+}
+
+.titleInputName,
+.titleInputNoTel,
+.titleNomorRekening,
+.titleEmail {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 600 !important;
+}
+
+.inputMoney {
+  border-left: none !important;
+}
+
+#basic-addon1 {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 600 !important;
+  background-color: #14ae5c;
+  border: 1px solid #14ae5c;
+}
+
+.btn-lanjut {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 600 !important;
+  background-color: #14ae5c !important;
+  padding: 0.5em 6em !important;
+}
