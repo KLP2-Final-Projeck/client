@@ -13,6 +13,7 @@ import ArticleTerkait from "./pages/Article/ArticleTerkait";
 import DetailArticle from "./pages/Article/DetailArticle";
 import Home from "./pages/HomeNoLogin/Home";
 import Forum from "./pages/Forum/Forum";
+import Petisi from "./pages/Petisi/Petisi";
 import HomepageAdmin from "./pages/Admin/HomepageAdmin/HomepageAdmin";
 
 function NeedLogin() {
@@ -43,6 +44,7 @@ function App() {
         <Route path="/Profile" element={<Profile />} />
         <Route path="/" element={<Home />} />
         <Route path="/Forum" element={<Forum />} />
+        <Route path="/Petisi" element={<Petisi />} />
 
         <Route path="/admin" element={<HomepageAdmin />} />
 

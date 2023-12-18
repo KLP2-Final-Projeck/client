@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import Navbars from "../Navbar";
 import Search from "../Search/Search";
+import Infografis from "../Infografis/Infografis";
 function Article() {
   const navigate = useNavigate();
   const [article, setArticle] = useState([]);
@@ -109,6 +110,7 @@ function Article() {
           </div>
         )}
       </div>
+      <Infografis />
     </>
   );
 }

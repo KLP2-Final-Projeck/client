@@ -5,7 +5,7 @@ import ArticleVector from "../../../assets/ArticleVector.jpg";
 import AksiVector from "../../../assets/AksiVector.jpg";
 import InfografisVector from "../../../assets/InfografisVector.jpg";
 import DonationVector from "../../../assets/DonationVector.jpg";
-// import NavbarAdmin from "../Sidebar/NavbarAdmin";
+import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import Swal from "sweetalert2";
 
 function HomepageAdmin() {
@@ -70,7 +70,7 @@ function HomepageAdmin() {
 
   return (
     <>
-      {/* <NavbarAdmin /> */}
+      <NavbarAdmin />
       {!isLoading ? (
         <div className="container pt-5 mb-5">
           <h1 className="text-center mb-5 titleWelcome">
@@ -127,14 +127,14 @@ function HomepageAdmin() {
                   <div className="col-md-8">
                     <div className="card-body">
                       <p className="card-title text-center m-0 text-dark fs-5">
-                        Aksi
+                        Petisi
                       </p>
                       <hr className="my-2 p-0" />
                       <p className="total card-text text-dark m-0 fs-3">
                         {totalAksi}
                       </p>
                       <p className="totalHomepageAdmin card-text text-dark m-0">
-                        Total Aksi
+                        Total Petisi
                       </p>
                     </div>
                   </div>

@@ -122,7 +122,7 @@ const HomePage = () => {
           <button
             className="btn"
             id="artikel-lainnya"
-            onClick={handleShowAnotherArticle}
+            onClick={() => navigate("/article")}
             style={
               saveState == 9
                 ? { visibility: "hidden" }

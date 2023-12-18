@@ -47,7 +47,7 @@ function NavbarAdmin() {
                 <ul className="navbar-nav">
                   <li className="nav-item mt-1">
                     <NavLink className="nav-link active" to="/admin/aksi">
-                      Aksi
+                      Petisi
                     </NavLink>
                   </li>
                   <li className="nav-item mt-1">
