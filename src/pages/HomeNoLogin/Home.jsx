@@ -31,7 +31,6 @@ const HomePage = () => {
   }, []);
 
   const handleShowAnotherArticle = () => {
-    // Replace Redux dispatch with local state update
     const fetchData = async () => {
       try {
         const response = await fetch("actual-api-endpoint-url");
@@ -52,7 +51,7 @@ const HomePage = () => {
         <div>
           <img src={logoImage} alt="logo" width="220" height="70" />
         </div>
-        <div className="container-fluid">
+        <div className="container-fluid pe-4">
           <button
             className="navbar-toggler"
             type="button"
@@ -98,7 +97,7 @@ const HomePage = () => {
               We Love Helping You to Safe <br />
               The Earth
             </h1>
-            <p className=" mt-3 mb-4 fw-bold fs-5 text-black">
+            <p className="mt-3 mb-4 fw-bold fs-5 text-black">
               Setiap tetesan air yang kau berikan pada tanaman hias adalah{" "}
               <br />
               investasi untuk keindahan hidupmu sendiri. <br />
@@ -180,7 +179,7 @@ const HomePage = () => {
         <h1 className="titleHighlight2 text-white pt-5 ">
           Menjadi Pencinta Tanaman Hias
         </h1>
-        <p className="text-white pb-5 fs-5">
+        <p className="text-white pb-5 fs-5 px-5">
           Jangan biarkan cintamu pada tanaman hias tersembunyi, jadilah bagian
           dari komunitas pencinta tanaman hias dan bagikan kecintaanmu pada
           dunia tanaman.

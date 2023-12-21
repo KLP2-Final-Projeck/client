@@ -7,6 +7,7 @@ import InfografisVector from "../../../assets/InfografisVector.jpg";
 import DonationVector from "../../../assets/DonationVector.jpg";
 import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 function HomepageAdmin() {
   const [totalAksi, setTotalAksi] = useState(null);
@@ -19,13 +20,13 @@ function HomepageAdmin() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        // Ganti URL dengan endpoint atau fungsi untuk mengambil data total dari API
-        const response = await fetch("URL_API");
-        const data = await response.json();
-        setTotalAksi(data.totalAksi);
-        setTotalArticle(data.totalArticle);
-        setTotalInfografis(data.totalInfografis);
-        setTotalDonasi(data.totalDonasi);
+        const response = await axios.get("http://localhost:4002/total"); // Ganti URL_API dengan endpoint atau fungsi untuk mengambil data total dari API
+        console.log(response);
+        const data = response.data;
+        setTotalAksi(data.totalAksi.length);
+        setTotalArticle(data.totalArticle.length);
+        setTotalInfografis(data.totalInfografis.length);
+        setTotalDonasi(data.totalDonasi.length);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -36,37 +37,37 @@ function HomepageAdmin() {
     fetchAPI();
   }, []);
 
-  useEffect(() => {
-    if (localStorage.getItem("role") == null) {
-      Swal.fire({
-        icon: "error",
-        title: "Terjadi Kesalahan !",
-        text: "Anda Harus Login Terlebih Dahulu",
-        confirm: {
-          text: "OK",
-          value: true,
-        },
-      }).then((value) => {
-        if (value) {
-          navigate("/");
-        }
-      });
-    } else if (localStorage.getItem("role") === "user") {
-      Swal.fire({
-        icon: "error",
-        title: "Anda Bukan Admin !",
-        text: "User Tidak Bisa Akses Ke Halaman Admin!",
-        confirm: {
-          text: "OK",
-          value: true,
-        },
-      }).then((value) => {
-        if (value) {
-          navigate("/");
-        }
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("role") == null) {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Terjadi Kesalahan !",
+  //       text: "Anda Harus Login Terlebih Dahulu",
+  //       confirm: {
+  //         text: "OK",
+  //         value: true,
+  //       },
+  //     }).then((value) => {
+  //       if (value) {
+  //         navigate("/");
+  //       }
+  //     });
+  //   } else if (localStorage.getItem("role") === "user") {
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Anda Bukan Admin !",
+  //       text: "User Tidak Bisa Akses Ke Halaman Admin!",
+  //       confirm: {
+  //         text: "OK",
+  //         value: true,
+  //       },
+  //     }).then((value) => {
+  //       if (value) {
+  //         navigate("/");
+  //       }
+  //     });
+  //   }
+  // }, []);
 
   return (
     <>
@@ -131,7 +132,7 @@ function HomepageAdmin() {
                       </p>
                       <hr className="my-2 p-0" />
                       <p className="total card-text text-dark m-0 fs-3">
-                        {totalAksi}
+                        {totalInfografis}
                       </p>
                       <p className="totalHomepageAdmin card-text text-dark m-0">
                         Total Petisi
@@ -161,7 +162,7 @@ function HomepageAdmin() {
                       </p>
                       <hr className="my-2 p-0" />
                       <p className="total card-text text-dark m-0 fs-3">
-                        {totalInfografis}
+                      {totalAksi}
                       </p>
                       <p className="totalHomepageAdmin card-text text-dark m-0">
                         Total Infografis

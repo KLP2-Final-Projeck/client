@@ -149,7 +149,7 @@ function DetailPetisi() {
     fetchKontributor();
   }, [key]);
 
-  const shareUrl = `https://final-environthink.netlify.app/aksi/${key}`;
+  const shareUrl = ``;
 
   return (
     <>

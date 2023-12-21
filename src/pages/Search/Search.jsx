@@ -9,16 +9,12 @@ const Search = () => {
 
   const handleSubmit = async () => {
     try {
-      // Example: Fetch data from an API based on searchValue
       const response = await fetch(`/api/search?query=${searchValue}`);
       const data = await response.json();
 
-      // Assuming the response is an array, update the result state
       setResult(data);
     } catch (error) {
       console.error("Error fetching search data:", error);
-
-      // Update the result state to indicate an error
       setResult("error");
     }
   };
@@ -32,7 +28,7 @@ const Search = () => {
               <input
                 id="inputSearchArticle"
                 type="text"
-                className="inputSearch form-control border border-2"
+                className="form-control focus-ring focus-ring-success border border-2"
                 placeholder="Cari Artikel!"
                 value={searchValue}
                 onChange={(event) => setSearchValue(event.target.value)}

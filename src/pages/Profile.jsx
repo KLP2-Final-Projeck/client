@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getUserLogged, getNotes } from "../utils/network";
 
 function Profile() {
-  const navigate = useNavigate(); // Import useNavigate
+  const navigate = useNavigate();
   const { username } = useParams();
   const [profil, setProfil] = useState({ data: {} });
   const [setNotes] = useState([]);

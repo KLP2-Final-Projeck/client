@@ -15,7 +15,6 @@ function Article() {
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        // Ganti URL dengan endpoint atau fungsi untuk mengambil data artikel
         const response = await fetch("URL_ARTICLE_API");
         const data = await response.json();
         setArticle(data);

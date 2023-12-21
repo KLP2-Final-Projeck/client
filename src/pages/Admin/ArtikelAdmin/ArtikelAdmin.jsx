@@ -5,81 +5,140 @@ import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2";
 import ArticleVector from "../../../assets/ArticleVector.jpg";
 import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
-import { deleteArticleAdmin, getArticle, getAPI } from "../../../utils/api"; // Ubah import sesuai struktur proyek Anda
+import axios from "axios";
 
-function ArtikelAdmin() {
+const ArtikelAdmin = () => {
+  const [artikel, setArtikel] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [totalArticle, setTotalArticle] = useState(0);
   const navigate = useNavigate();
 
-  const [article, setArticle] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [totalArticle, setTotalArticle] = useState(0);
+  useEffect(() => {
+    const fetchTotalArticle = async () => {
+      try {
+        const response = await axios.get('http://localhost:4002/artikel'); 
+        setTotalArticle(response.data.length);
+        console.log(response);
+      } catch (error) {
+        console.error('Error fetching total articles:', error);
+      }
+    };
 
-  const handleDeleteArticle = async (id) => {
-    try {
-      await deleteArticleAdmin(id);
-      // Setelah berhasil menghapus, refresh data artikel
-      fetchArticleData();
-    } catch (error) {
-      console.error("Error deleting article:", error);
-    }
-  };
+    fetchTotalArticle();
+  }, []); 
 
-  const fetchArticleData = async () => {
+  const getArtikel = async () => {
     try {
-      const articles = await getArticle();
-      setArticle(articles);
-      setIsLoading(false);
+      const response = await axios.get("http://localhost:4002/artikel");
+      setArtikel(response.data);
     } catch (error) {
-      console.error("Error fetching articles:", error);
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    const checkUserRole = () => {
-      if (localStorage.getItem("role") == null) {
-        Swal.fire({
-          icon: "error",
-          title: "Terjadi Kesalahan !",
-          text: "Anda Harus Login Terlebih Dahulu",
-          confirm: {
-            text: "OK",
-            value: true,
-          },
-        }).then((value) => {
-          if (value) {
-            navigate("/login");
-          }
-        });
-      } else if (localStorage.getItem("role") === "user") {
-        Swal.fire({
-          icon: "error",
-          title: "Anda Bukan Admin !",
-          text: "User Tidak Bisa Akses Ke Halaman Admin!",
-          confirm: {
-            text: "OK",
-            value: true,
-          },
-        }).then((value) => {
-          if (value) {
-            navigate("/");
-          }
-        });
-      }
+    getArtikel();
+  }, []);
 
-      if (localStorage.getItem("role") === "admin") {
-        fetchArticleData();
-      }
-    };
+  const deleteArtikel = async (id) => {
+    try {
+      await axios.delete(`http://localhost:4002/artikel/${id}`)
+      getArtikel();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-    checkUserRole();
-  }, [navigate]);
+  // if (localStorage.getItem("role") == null) {
+  //   Swal.fire({
+  //     icon: "error",
+  //     title: "Terjadi Kesalahan !",
+  //     text: "Anda Harus Login Terlebih Dahulu",
+  //     confirm: {
+  //       text: "OK",
+  //       value: true,
+  //     },
+  //   }).then((value) => {
+  //     if (value) {
+  //       navigate("/login");
+  //     }
+  //   });
+  // } else if (localStorage.getItem("role") === "user") {
+  //   Swal.fire({
+  //     icon: "error",
+  //     title: "Anda Bukan Admin !",
+  //     text: "User Tidak Bisa Akses Ke Halaman Admin!",
+  //     confirm: {
+  //       text: "OK",
+  //       value: true,
+  //     },
+  //   }).then((value) => {
+  //     if (value) {
+  //       navigate("/");
+  //     }
+  //   });
+  // }
+
+  //   if (localStorage.getItem("role") === "admin") {
+  //     fetchArticleData();
+  //   }
+  // };
 
   return (
     <>
       <NavbarAdmin />
       <div className="container pt-4">
         <h2>Article</h2>
-        {/* ... (bagian yang lain) */}
+        <div className="row gx-4 gy-2 justify-content-start">
+          <div className="col-6 w-auto">
+            <div className="card card-total mb-3" style={{ maxWidth: "30em" }}>
+              <div className="row g-0">
+                <div className="col-md-4">
+                  <img
+                    src={ArticleVector}
+                    className="img-fluid rounded-start"
+                    alt="Artikel "
+                  />
+                </div>
+                <div className="col-md-8">
+                  <div className="card-body">
+                    <p className="card-title text-center m-0 text-dark fs-5">
+                      Artikel
+                    </p>
+                    <hr className="my-2 p-0" />
+                    <Link
+                      to="/admin/article"
+                      className="total card-text text-dark m-0 fs-3"
+                      style={{ textDecoration: "none" }}
+                    >
+                      {totalArticle}
+                    </Link>
+                    <p className="totalHomepageAdmin card-text text-dark m-0">
+                      Total Artikel
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Add Artikel */}
+        <div className="row">
+          <div className="col-md-12 d-flex justify-content-end">
+            <Link
+              to="/admin/artikel/AddArtikelAdmin"
+              className="btn bg-primary text-white text-sm px-5 py-2"
+            >
+              {" "}
+              <FaPlus /> Tambah Artikel
+            </Link>
+          </div>
+        </div>
+        {/* Add Artikel */}
+
         <div
           className="card mt-4 my-5"
           style={{
@@ -105,7 +164,7 @@ function ArtikelAdmin() {
                   </tr>
                 </thead>
                 <tbody>
-                  {isLoading ? (
+                  {loading ? (
                     <tr>
                       <td>
                         <div className="text-center  d-flex justify-content-center align-items-center my-5 py-5">
@@ -115,35 +174,31 @@ function ArtikelAdmin() {
                       </td>
                     </tr>
                   ) : (
-                    article.map((item) => (
-                      <tr key={item.id}>
-                        <th
-                          scope="row"
-                          className="me-5"
-                          style={{ cursor: "pointer" }}
-                        >
+                    artikel.map((item) => (
+                      <tr
+                        key={item.id}
+                      >
+                        <th scope="row" className="me-5" style={{ cursor: "pointer" }}>
                           <img
-                            src={item.url}
+                            src={item.image}
                             alt="name"
                             className="img-artikel w-100"
                           />
                         </th>
-                        <td style={{ cursor: "pointer" }}>
-                          {item.titleArticle}
-                        </td>
+                        <td style={{ cursor: "pointer" }}>{item.titleArtikel}</td>
                         <td>{item.category}</td>
                         <td>{item.author}</td>
                         <td>{item.date}</td>
                         <td>
                           <div className="row justify-content-center gy-4">
                             <div className="col-4 px-1">
-                              <button className="btn p-0 text-success w-100 ">
+                              <Link to={`/admin/artikel/UpdateArtikelAdmin/${item.id}`} className="btn p-0 text-success w-100 ">
                                 <FaPen />
-                              </button>
+                              </Link>
                             </div>
                             <div className="col-4 px-1">
                               <button
-                                onClick={() => handleDeleteArticle(item.id)}
+                                onClick={() =>  deleteArtikel(item.id)}
                                 className="btn p-0 text-danger w-100"
                               >
                                 <FaTrashAlt />

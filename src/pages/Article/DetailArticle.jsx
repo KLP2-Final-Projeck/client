@@ -37,7 +37,7 @@ function DetailArticle() {
     fetchArticleDetail();
   }, [key]);
 
-  const shareUrl = `https://final-environthink.netlify.app/artikel/${key}`;
+  const shareUrl = ``;
 
   return (
     <>

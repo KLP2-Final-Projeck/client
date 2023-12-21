@@ -1,16 +1,19 @@
-import "./Donasi.css";
-import ImgCreditCard from "../../assets/CardCredit.png";
+import "../../App.css";
+import ImgCreditCard from "../../assets/CreditCard.png";
 import { useState, useRef, useEffect } from "react";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 import Navbar from "../Navbar";
-import Footer from "../Footer/Footer";
+import { useNavigate } from "react-router-dom";
+import Footer from "../Footer/Footer"
 
 const Donasi = () => {
+
   const navigate = useNavigate();
+
   const ref = useRef();
 
   const [inputMoney, setInputMoney] = useState("");
+
   const [formData, setFormData] = useState({
     Nama: "",
     Nomor_Telepon: "",
@@ -35,7 +38,7 @@ const Donasi = () => {
   });
 
   const handleInputMoney = (event) => {
-    if (typeof event === "number") {
+    if (typeof event == "number") {
       const getButtonValue = event;
       const formattedValue = Number(getButtonValue).toLocaleString("id-ID");
       setInputMoney(formattedValue);
@@ -44,9 +47,9 @@ const Donasi = () => {
         originalValue: getButtonValue,
         formattedValue: `Rp ${formattedValue}`,
       });
-    } else if (event.target.value === "") {
+    } else if (event.target.value == "") {
       setInputMoney("");
-    } else if (typeof event === "object") {
+    } else if (typeof event == "object") {
       const inputNumber = parseInt(event.target.value.replace(/\D/g, ""), 10);
       const formattedValue = inputNumber.toLocaleString("id-ID");
       setInputMoney(formattedValue);
@@ -68,10 +71,10 @@ const Donasi = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (
-      formData.Email === "" ||
-      formData.Nama === "" ||
-      formData.Nomor_Rekening === "" ||
-      formData.Nomor_Telepon === ""
+      formData.Email == "" ||
+      formData.Nama == "" ||
+      formData.Nomor_Rekening == "" ||
+      formData.Nomor_Telepon == ""
     ) {
       Swal.fire({
         icon: "error",
@@ -88,8 +91,15 @@ const Donasi = () => {
         },
       }).then((value) => {
         if (value) {
-          navigate("/Donasi");
+          // navigate("/login");
         }
+      });
+    } else {
+      setData((prevDatas) => {
+        return {
+          ...prevDatas,
+          ...formData,
+        };
       });
     }
   };
@@ -98,24 +108,13 @@ const Donasi = () => {
     <>
       <Navbar />
       <div className="container-fluid row p-0 m-0">
-        <div className="highlight col bg-primary p-0">
+        <div className="highlight col p-0">
           <div className="wrapperHighlightText d-flex flex-column text-white">
             <h2 className="titleHighlight">
               Yuk, jadi bagian dari Garden Plants!
             </h2>
             <p className="descHighlight">
-              Tanaman hias bukan hanya tanaman, tapi juga cerita cinta dan
-              kepedulian. Dengan berdonasi untuk komunitas tanaman hias, Anda
-              ikut menulis bab baru dalam kisah keberlanjutan ini. Mari
-              bersama-sama membuat dunia lebih indah melalui kecintaan pada
-              tanaman hias. Mari bergabung dalam perjalanan kami untuk
-              melestarikan keindahan ini. Dengan berdonasi, Anda menjadi bagian
-              tak terpisahkan dari upaya kami untuk merawat dan menyebarkan
-              cinta pada tanaman hias <br />
-              Kami membutuhkan bantuan Anda! Bergabunglah dengan kami dalam
-              membangun komunitas tanaman hias yang lebih kuat dan
-              berkelanjutan. Dengan berdonasi, Anda menjadi pionir perubahan dan
-              turut serta dalam menciptakan lingkungan yang hijau dan sehat
+              "Selamat datang di dunia kebun impian! Jelajahi keindahan alam melalui proyek website Garden Plants kami. Temukan ragam tanaman yang memikat hati, tips perawatan yang berguna, dan inspirasi untuk menciptakan kebun Anda sendiri. Dengan informasi lengkap dan gambar yang memukau, mari bersama-sama menjelajahi keajaiban tanaman dan membawa keindahan ke dalam hidup Anda melalui proyek Garden Plants website kami"
             </p>
           </div>
         </div>
@@ -222,7 +221,9 @@ const Donasi = () => {
                 </button>
               </div>
               <div className="mb-5 text-center">
-                <img src={ImgCreditCard} alt="Payment via credit card!" />
+                <a href="#">
+                  <img src={ImgCreditCard} alt="Payment via credit card!" />
+                </a>
               </div>
             </form>
           </div>

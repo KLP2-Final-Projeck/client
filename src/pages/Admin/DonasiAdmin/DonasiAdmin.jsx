@@ -1,13 +1,13 @@
 import "./DonasiAdmin.css";
-import { FaTrashAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import NavbarAdmin from "../NavbarAdmin";
+import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import dayjs from "dayjs";
 import "dayjs/locale/id";
 import { useNavigate } from "react-router";
-import DonationVector from "../../../assets/DonationVector.jpg";
 import { Spinner } from "react-bootstrap";
+import axios from "axios";
+// import DonationVector from "../../../assets/DonationVector.jpg";
 
 const DonasiAdmin = () => {
   const [donasiData, setDonasiData] = useState([]);
@@ -45,37 +45,37 @@ const DonasiAdmin = () => {
   };
 
   useEffect(() => {
-    if (roleLocalStorage === null) {
-      if (localStorage.getItem("role") == null) {
-        Swal.fire({
-          icon: "error",
-          title: "Terjadi Kesalahan !",
-          text: "Anda Harus Login Terlebih Dahulu",
-          confirm: {
-            text: "OK",
-            value: true,
-          },
-        }).then((value) => {
-          if (value) {
-            navigate("/login");
-          }
-        });
-      } else if (localStorage.getItem("role") === "user") {
-        Swal.fire({
-          icon: "error",
-          title: "Anda Bukan Admin !",
-          text: "User Tidak Bisa Akses Ke Halaman Admin!",
-          confirm: {
-            text: "OK",
-            value: true,
-          },
-        }).then((value) => {
-          if (value) {
-            navigate("/");
-          }
-        });
-      }
-    }
+    // if (roleLocalStorage === null) {
+    //   if (localStorage.getItem("role") == null) {
+    //     Swal.fire({
+    //       icon: "error",
+    //       title: "Terjadi Kesalahan !",
+    //       text: "Anda Harus Login Terlebih Dahulu",
+    //       confirm: {
+    //         text: "OK",
+    //         value: true,
+    //       },
+    //     }).then((value) => {
+    //       if (value) {
+    //         navigate("/login");
+    //       }
+    //     });
+    //   } else if (localStorage.getItem("role") === "user") {
+    //     Swal.fire({
+    //       icon: "error",
+    //       title: "Anda Bukan Admin !",
+    //       text: "User Tidak Bisa Akses Ke Halaman Admin!",
+    //       confirm: {
+    //         text: "OK",
+    //         value: true,
+    //       },
+    //     }).then((value) => {
+    //       if (value) {
+    //         navigate("/");
+    //       }
+    //     });
+    //   }
+    // }
 
     // Assuming you have an API endpoint to fetch donasi data
     // Replace the following with your actual API call

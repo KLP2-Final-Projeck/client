@@ -23,12 +23,12 @@ function NavbarAdmin() {
         key="lg"
         bg="light"
         expand="lg"
-        className="mb-3 d-flex flex-column justify-content-between shadow sticky-top bg-white"
+        className="mb-3 d-flex flex-column justify-content-between shadow sticky-top bg-white row-gap-5"
       >
         <Container fluid>
           <Navbar.Brand as={Link} to="/admin">
             {" "}
-            <img src={Logo} id="logo" alt="Environthink Logo" />
+            <img src={Logo} id="logo" alt="Logo Garden Plants" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} />
           <Navbar.Offcanvas
@@ -38,20 +38,20 @@ function NavbarAdmin() {
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-                <img src={Logo} id="logo" alt="Environthink Logo" />
+                <img src={Logo} id="logo" alt="Logo Garden Plants" />
               </Offcanvas.Title>
             </Offcanvas.Header>
 
             <Offcanvas.Body>
-              <Nav className="justify-content-end flex-grow-1 pe-3">
+              <Nav className="justify-content-end flex-grow-1 pe-3 row-gap-5">
                 <ul className="navbar-nav">
                   <li className="nav-item mt-1">
-                    <NavLink className="nav-link active" to="/admin/aksi">
+                    <NavLink className="nav-link active" to="/admin/petisi">
                       Petisi
                     </NavLink>
                   </li>
                   <li className="nav-item mt-1">
-                    <NavLink className="nav-link active" to="/admin/article">
+                    <NavLink className="nav-link active" to="/admin/artikel">
                       Artikel
                     </NavLink>
                   </li>
@@ -64,6 +64,11 @@ function NavbarAdmin() {
                   <li className="nav-item mt-1">
                     <NavLink className="nav-link active" to="/admin/donasi">
                       Donasi
+                    </NavLink>
+                  </li>
+                  <li className="nav-item mt-1">
+                    <NavLink className="nav-link active" to="/admin/User">
+                      User
                     </NavLink>
                   </li>
 

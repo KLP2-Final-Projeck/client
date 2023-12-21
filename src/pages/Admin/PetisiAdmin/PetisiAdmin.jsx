@@ -5,10 +5,11 @@ import { Spinner } from "react-bootstrap";
 import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import Swal from "sweetalert2";
 import AksiVector from "../../../assets/AksiVector.jpg";
+import axios from "axios";
 
 function AksiAdmin() {
   const [listAksi, setListAksi] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [totalAksi, setTotalAksi] = useState(0);
 
@@ -17,62 +18,42 @@ function AksiAdmin() {
   };
 
   useEffect(() => {
-    fetch("URL_API_AKSI")
-      .then((response) => response.json())
-      .then((data) => {
-        setListAksi(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setIsLoading(false);
-      });
+    const fetchTotalArticle = async () => {
+      try {
+        const response = await axios.get('http://localhost:4002/petisi'); 
+        setTotalAksi(response.data.length);
+        console.log(response);
+      } catch (error) {
+        console.error('Error fetching total articles:', error);
+      }
+    };
+
+    fetchTotalArticle();
   }, []);
 
-  const handleShowModal = () => {
-    setShowModal(true);
+  const getPetisi = async () => {
+    try {
+      const response = await axios.get("http://localhost:4002/petisi");
+      setListAksi(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const deleteHandler = (id) => {
-    Swal.fire({
-      title: "Apakah anda yakin ingin menghapus komentar?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Ganti penggunaan useDispatch dan deleteAksi dengan fungsi fetch atau sesuai kebutuhan
-        // dispatch(deleteAksi(id, localStorage.getItem("accessToken")));
+  useEffect(() => {
+    getPetisi();
+  }, []);
 
-        // Contoh penggunaan fetch untuk menghapus data
-        fetch(`URL_API_AKSI/${id}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            Swal.fire({
-              position: "top",
-              icon: "success",
-              title: 'Berhasil!, "Berhasil Hapus Data Komentar',
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            // Update state lokal setelah penghapusan data
-            setListAksi((prevList) =>
-              prevList.filter((item) => item.id !== id)
-            );
-          })
-          .catch((error) => {
-            console.error("Error deleting data:", error);
-          });
-      }
-    });
-  };
+  const deletePetisi = async (id) => {
+    try {
+      await axios.delete(`http://localhost:4002/petisi/${id}`);
+      getPetisi();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <>
@@ -116,7 +97,7 @@ function AksiAdmin() {
           <div className="col-md-12 d-flex justify-content-end ">
             <button
               className="btn bg-primary text-white text-sm px-5 py-2 d-flex gap-2 justify-content-end align-items-center"
-              onClick={handleShowModal}
+              onClick={() => navigate('/admin/petisi/AddPetisiAdmin')}
             >
               <FaPlus /> Tambah Aksi
             </button>
@@ -147,7 +128,7 @@ function AksiAdmin() {
                   </tr>
                 </thead>
                 <tbody>
-                  {isLoading ? (
+                  {loading ? (
                     <tr>
                       <td>
                         <div className="text-center  d-flex justify-content-center align-items-center my-5 py-5">
@@ -161,7 +142,7 @@ function AksiAdmin() {
                       <tr key={item.id}>
                         <td className="me-5" style={{ cursor: "pointer" }}>
                           <img
-                            src={item.url}
+                            src={item.image}
                             alt="name"
                             className="img-artikel w-100"
                           />
@@ -174,13 +155,13 @@ function AksiAdmin() {
                         >
                           {item.title}
                         </td>
-                        <td>{item.numberofsupport}</td>
+                        <td>{item.numberofSupport}</td>
                         <td>{item.target}</td>
                         <td>
                           <div className="row">
                             <div className="col-4 px-1">
                               <Link
-                                to="/"
+                                to={`/admin/petisi/UpdatePetisiAdmin/${item.id}`}
                                 className="btn p-0 text-success w-100 "
                               >
                                 <FaPen />
@@ -188,7 +169,7 @@ function AksiAdmin() {
                             </div>
                             <div className="col-4 px-1">
                               <Link
-                                onClick={() => deleteHandler(item.id)}
+                                onClick={() => deletePetisi(item.id)}
                                 className="btn p-0 text-danger w-100 "
                               >
                                 <FaTrashAlt />

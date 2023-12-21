@@ -12,9 +12,9 @@ function Navbar() {
     navigate("/profile");
   };
 
-  const onLogoutHandler = (event) => {
-    event.preventDefault();
-    navigate("/logout");
+  function LogOut() {
+    localStorage.clear();
+    navigate('/');
   };
 
   const onDonasiHandler = (event) => {
@@ -25,7 +25,12 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary fixed-top">
       <div>
-        <img src={logoImage} alt="logo" width="220" height="70" />
+        <a href="" onClick={(e) => {
+          e.preventDefault();
+          navigate('/homePage');
+        }}>
+          <img src={logoImage} alt="logo" width="220" height="70" />
+        </a>
       </div>
       <div className="container-fluid">
         <button
@@ -43,7 +48,7 @@ function Navbar() {
           className=" justify-content-end flex-grow-1 pe-3 collapse navbar-collapse"
           id="navbarSupportedContent"
         >
-          <ul className="navbar-nav d-flex justify-content-center fs-4">
+          <ul className="navbar-nav d-flex justify-content-center fs-4 pe-5 gap-3">
             <li className="nav-item">
               <Link to="/HomePage" className="nav-link">
                 Home
@@ -55,7 +60,7 @@ function Navbar() {
               </Link>
             </li>
             <li class="nav-item">
-              <Link to="/Article" className="nav-link">
+              <Link to="/article" className="nav-link">
                 Artikel
               </Link>
             </li>
@@ -93,6 +98,8 @@ function Navbar() {
         </div>
       </div>
 
+      {/* Drop Down */}
+      {localStorage.key('user-info') ?
       <div className="dropdown">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -112,16 +119,14 @@ function Navbar() {
           >
             Profile <img src={user} alt="Profile" width="25" height="25" />
           </button>
-
           <button
-            onClick={() => {
-              navigate(`/`);
-            }}
+            onClick={LogOut}
           >
             Logout <img src={logout} alt="Profile" width="25" height="25" />
           </button>
         </ul>
       </div>
+      : null}
     </nav>
   );
 }

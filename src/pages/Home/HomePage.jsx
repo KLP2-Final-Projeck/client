@@ -30,7 +30,6 @@ const HomePage = () => {
   }, []);
 
   const handleShowAnotherArticle = () => {
-    // Replace Redux dispatch with local state update
     const fetchData = async () => {
       try {
         const response = await fetch("actual-api-endpoint-url");
@@ -138,7 +137,7 @@ const HomePage = () => {
         <h1 className="titleHighlight2 text-white pt-5 ">
           Menjadi Pencinta Tanaman Hias
         </h1>
-        <p className="text-white pb-5 fs-5">
+        <p className="text-white pb-5 fs-5 px-5">
           Jangan biarkan cintamu pada tanaman hias tersembunyi, jadilah bagian
           dari komunitas pencinta tanaman hias dan bagikan kecintaanmu pada
           dunia tanaman.

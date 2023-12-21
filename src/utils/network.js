@@ -1,4 +1,6 @@
-const BASE_URL = "http://165.22.55.164:3000/api";
+import axios from 'axios';
+const Swal = require('sweetalert2');
+const BASE_URL = "http://localhost:4002";
 
 function getAccessToken() {
   return localStorage.getItem("accessToken");
@@ -7,9 +9,26 @@ function getAccessToken() {
 function putAccessToken(accessToken) {
   return localStorage.setItem("accessToken", accessToken);
 }
+
 function deleteAccessToken() {
   return localStorage.removeItem("accessToken");
 }
+
+// async function getUserDataFromDatabase(token) {
+//   try {
+//     const response = await axios.get(`${BASE_URL}/user`, {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+//     console.log(response);
+//     return response.data.username;
+//   } catch (error) {
+//     console.error('Error fetching user data:', error);
+//     return { error: true, code: error.response?.status || 'UNKNOWN_ERROR' };
+//   }
+// }
+
 async function fetchWithToken(url, options = {}) {
   return fetch(url, {
     ...options,
@@ -21,7 +40,7 @@ async function fetchWithToken(url, options = {}) {
 }
 
 async function login({ username, password }) {
-  const response = await fetch(`${BASE_URL}/auth/login`, {
+  const response = await fetch(`${BASE_URL}/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -32,34 +51,41 @@ async function login({ username, password }) {
   const responseJson = await response.json();
   console.log(responseJson);
   if (response.status >= 400) {
-    alert(responseJson.msg);
+    alert(responseJson.msg || "Username atau password salah");
     return { error: true, code: response.status, data: null };
   }
-
   return { error: false, code: response.status, data: responseJson.data };
 }
 
-async function register({ username, password }) {
-  const response = await fetch(`${BASE_URL}/auth/register`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ username, password }),
-  });
+async function register({ username, password, email, telepon = "",isAdmin = false }) {
+  try {
+    const response = await fetch(`${BASE_URL}/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password, email, telepon ,isAdmin }),
+    });
 
-  const responseJson = await response.json();
+    const responseJson = await response.json();
 
-  if (response.status >= 400) {
-    alert(responseJson.msg);
-    return { error: true, code: response.status };
+    if (!response.ok) {
+      console.error("Error response from server:", responseJson);
+      Swal.fire(responseJson.msg || "Password Harus Lebih Dari 8 Karakter!");
+      return { error: true, code: response.status };
+    }
+
+    console.log("Registrasi berhasil:", responseJson);
+    return { error: false, code: response.status };
+  } catch (error) {
+    console.error("Error during registration:", error);
+    alert("Terjadi kesalahan. Silakan coba lagi.");
+    return { error: true, code: 500 };
   }
-
-  return { error: false, code: response.status };
 }
 
 async function getUserLogged() {
-  const response = await fetchWithToken(`${BASE_URL}/users/own-profile`);
+  const response = await fetchWithToken(`${BASE_URL}/Users`);
   const responseJson = await response.json();
 
   if (response.status >= 400) {
@@ -98,8 +124,8 @@ async function getNotes() {
   return { error: false, code: response.status, data: responseJson.data };
 }
 
-async function getNote(id) {
-  const response = await fetchWithToken(`${BASE_URL}/notes/${id}`);
+async function getUser(id) {
+  const response = await fetchWithToken(`${BASE_URL}/User/:${id}`);
   const responseJson = await response.json();
 
   if (response.status >= 400) {
@@ -123,6 +149,11 @@ async function deleteNote(id) {
   return { error: false, code: response.status, data: responseJson.data };
 }
 
+function isUserLoggedIn() {
+  const authToken = getAccessToken();
+  return !!authToken;
+};
+
 export {
   getAccessToken,
   putAccessToken,
@@ -132,6 +163,7 @@ export {
   getUserLogged,
   addNote,
   getNotes,
-  getNote,
+  getUser,
   deleteNote,
+  isUserLoggedIn
 };

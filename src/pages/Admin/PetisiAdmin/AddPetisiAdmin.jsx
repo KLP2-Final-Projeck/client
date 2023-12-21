@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate , useParams, Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-const UpdatePetisiAdmin = () => {
+const AddPetisiAdmin = () => {
     const [numberofSupport, setNumberofSupport] = useState("");
     const [target, setTarget] = useState("");
     const [url, setUrl] = useState("");
@@ -15,7 +15,6 @@ const UpdatePetisiAdmin = () => {
     const [desc1, setDesc1] = useState("");
     const [desc2, setDesc2] = useState("");
 
-    const {id} = useParams();
     const navigate = useNavigate();
 
     const handleImageChange = (e) => {
@@ -40,33 +39,24 @@ const UpdatePetisiAdmin = () => {
     const PetisiSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:4002/petisi/${id}`, {
+            const response = await axios.post('http://localhost:4002/petisi', {
                 numberofSupport, target, url, title, image, hashtag, desc, desc1, desc2
             });
             console.log(response);
             // setNumberofSupport(""),
+            setTarget("");
+            setUrl("");
+            setTitle("");
+            setImages("");
+            setHashtag("");
+            setDesc("");
+            setDesc1("");
+            setDesc2("");
             console.log('Respon dari server:', response.data);
         } catch (error) {
             console.error('Error:', error);
         }
     };
-
-    useEffect(() => {
-      getPetisibyId();
-    }, []);
-
-    const getPetisibyId = async () => {
-      const response = await axios.get(`http://localhost:4002/petisi/${id}`);
-      setNumberofSupport(response.data.numberofSupport);
-      setTarget(response.data.target);
-      setUrl(response.data.url);
-      setTitle(response.data.title);
-      setImages(response.data.image);
-      setHashtag(response.data.hashtag);
-      setDesc(response.data.desc);
-      setDesc1(response.data.desc1);
-      setDesc2(response.data.desc2);
-    }
 
     // useEffect(() => {
     // if (localStorage.getItem("role") == null) {
@@ -273,11 +263,11 @@ const UpdatePetisiAdmin = () => {
                                     <button onClick={() => Swal.fire({
                                         position: "top-center",
                                         icon: "success",
-                                        title: "Artikel Berhasil di Update!",
+                                        title: "Artikel Berhasil di Tambahkan!",
                                         showConfirmButton: false,
                                         timer: 1500
                                     }).then(() => navigate("/admin/petisi"))} type="submit" className="btn btn-primary">
-                                        Update
+                                        Save
                                     </button>
                                 </div>
                             </form>
@@ -289,4 +279,4 @@ const UpdatePetisiAdmin = () => {
     );
 }
 
-export default UpdatePetisiAdmin;
+export default AddPetisiAdmin;

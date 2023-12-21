@@ -113,7 +113,7 @@ function PetisiTerkait() {
                         <h3 className="titleAksi">{item.title}</h3>
                       </div>
                       <p className="descAksi text-dark wrapText">{item.desc}</p>
-                      <p className="card-text  kontributorAksi sub-title d-flex align-items-center gap-2">
+                      <p className="card-text kontributorAksi sub-title d-flex align-items-center gap-2">
                         <FaUsers />
                         {item.numberofsupport == 0 ? (
                           <span className="fw-medium fs-6">

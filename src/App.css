@@ -13,6 +13,120 @@
   }
 }
 
+/* Button Add User */
+.bt{
+  width: 70px;
+}
+/* End */
+
+
+/* User */
+.f-width{
+  width: 100px;
+  background-color: #14ae5c;
+}
+/* end User */
+
+/* Atas */
+.Atas{
+  padding-top: 200px;
+  padding-bottom: 100px;
+}
+/* End Ats */
+
+/* BG Style */
+.backgroundStyle {
+  background-image: url('./assets/bg.jpeg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+/* End BG Style */
+
+/* Start */
+.highlight {
+  background-image: url(./assets/tanamanDonasi2.jpg);
+  background-size: cover;
+  background-position-x: left;
+}
+
+.wrapperHighlightText {
+  margin: 30% 4em 50% 4em;
+}
+
+.titleHighlight {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 800 !important;
+}
+
+.descHighlight {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 500 !important;
+  text-align: justify;
+}
+
+.wrapperInputDonasi {
+  padding: 0em 2em;
+  margin-top: 8em;
+}
+
+.TitleDonasi,
+.DescDonasi {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 700 !important;
+}
+
+.btn-50k,
+.btn-100k,
+.btn-150k {
+  border: 1px solid #14ae5c !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 700 !important;
+}
+.btn-50k:hover,
+.btn-100k:hover,
+.btn-150k:hover {
+  background-color: #14ae5c !important;
+  color: white !important;
+}
+
+.btn-50k:focus,
+.btn-100k:focus,
+.btn-150k:focus {
+  background-color: #14ae5c !important;
+  color: white !important;
+}
+
+.titleInputName,
+.titleInputNoTel,
+.titleNomorRekening,
+.titleEmail {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 600 !important;
+}
+
+.inputMoney {
+  border-left: none !important;
+}
+
+#basic-addon1 {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 600 !important;
+  background-color: #14ae5c;
+  border: 1px solid #14ae5c;
+}
+
+.btn-lanjut {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 600 !important;
+  background-color: #14ae5c !important;
+  padding: 0.5em 6em !important;
+}
+/* End */
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
