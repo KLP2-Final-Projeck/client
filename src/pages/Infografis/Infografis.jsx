@@ -3,6 +3,7 @@ import "./Infografis.css";
 import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Infografis() {
   const navigate = useNavigate();
@@ -12,22 +13,22 @@ function Infografis() {
   const [showButton, setShowButton] = useState(true);
   const [filterData, setFilterData] = useState([]);
 
-  useEffect(() => {
-    // Fetch data or any asynchronous operation here
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/infografis");
-        const data = await response.json();
-        setInfografis(data);
-      } catch (error) {
-        console.error("Error fetching infografis data:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:4002/infografis");
+      setInfografis(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+      setIsLoading(false);
+    } 
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
+
+
 
   useEffect(() => {
     setFilterData(infografis.slice(0, 3));
@@ -74,13 +75,13 @@ function Infografis() {
                 <div key={item.id} className="col-md-6 col-lg-4 mb-3 pb-4">
                   <div className="card card-infografis h-100">
                     <img
-                      src={item.url}
+                      src={item.gambar}
                       style={{ cursor: "pointer" }}
                       className="card-img-top img-infografis h-100"
                       data-bs-toggle="modal"
                       data-bs-target={`#${item.id}Backdrop`}
                       alt="infografis"
-                      onClick={() => handleClickInfografis(item.url)}
+                      onClick={() => handleClickInfografis(item.gambar)}
                     />
                     <div className="card-body">
                       <h1

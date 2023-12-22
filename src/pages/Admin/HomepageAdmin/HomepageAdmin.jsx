@@ -20,7 +20,7 @@ function HomepageAdmin() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        const response = await axios.get("http://localhost:4002/total"); // Ganti URL_API dengan endpoint atau fungsi untuk mengambil data total dari API
+        const response = await axios.get("http://localhost:4002/total"); 
         console.log(response);
         const data = response.data;
         setTotalAksi(data.totalAksi.length);
@@ -206,7 +206,7 @@ function HomepageAdmin() {
           <h1 className="text-center mt-3 titleAdmin">Admin Garden Plants</h1>
         </div>
       ) : (
-        <div className="mx-auto g-4 d-flex gap-3" style={{ marginTop: "8em" }}>
+        <div className="mx-auto g-4 d-flex justify-content-center gap-3" style={{ marginTop: "8em" }}>
           <Spinner animation="grow" size="sm" variant="success" />
           <Spinner animation="grow" size="sm" variant="success" />
           <Spinner animation="grow" size="sm" variant="success" />

@@ -4,13 +4,32 @@ import Spinner from "react-bootstrap/Spinner";
 import Navbars from "../Navbar";
 import Search from "../Search/Search";
 import Infografis from "../Infografis/Infografis";
+import axios from "axios";
+
 function Article() {
   const navigate = useNavigate();
-  const [article, setArticle] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [limit, setLimit] = useState(3);
   const [showButton, setShowButton] = useState(true);
   const [filterData, setFilterData] = useState([]);
+  const [artikel, setArtikel] = useState([]);
+  const [saveState, setSaveState] = useState(3);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:4002/artikel");
+      setArtikel(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+      setIsLoading(false);
+    } 
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
 
   return (
     <>
@@ -27,7 +46,7 @@ function Article() {
                 <Spinner animation="border" variant="dark" />
               </div>
             ) : (
-              filterData.map((item) => (
+              artikel.map((item) => (
                 <div
                   key={item.id}
                   className="col-md-6 col-lg-4 mb-3 pt-4 pb-4"
@@ -35,9 +54,9 @@ function Article() {
                     navigate(`/article/${item.id}`);
                   }}
                 >
-                  <div className="card card-artikel h-100">
+                  <div className="text-start card card-artikel h-100">
                     <img
-                      src={item.url}
+                      src={item.image}
                       className="card-img-top"
                       alt="artikel"
                     />
@@ -47,14 +66,14 @@ function Article() {
                         className="wrapperLinkTitleArticles"
                       >
                         <h5 className="card-title title-article">
-                          {item.titleArticle}
+                          {item.titleArtikel}
                         </h5>
                       </Link>
                       <p
                         className="card-text desc-article"
                         style={{ color: "#595959", textAlign: "justify" }}
                       >
-                        {item.descArticle}
+                        {item.descArtikel}
                       </p>
                       <p className="fw-bold" style={{ color: "#6F7376" }}>
                         <span className="author"> {item.author} </span>{" "}
