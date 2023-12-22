@@ -1,6 +1,6 @@
 # Username & Passsowrd Testing
-Jako
-Jako1234
+username : (Jako)
+Password : (Jako1234)
 
 # Client
 Struktur Folder FE ada di folder assets
