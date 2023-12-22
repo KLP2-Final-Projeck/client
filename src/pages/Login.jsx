@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { login, putAccessToken } from "../utils/network";
+import {
+  login,
+  putAccessToken,
+  putUsername,
+  putIsAdmin,
+} from "../utils/network";
 import Navbar from "./Navbar";
-import Footer from "./Footer/Footer"
+import Footer from "./Footer/Footer";
 import bg2 from "../assets/hia.jpg";
-import '../App.css';
-import Swal from 'sweetalert2'
+import "../App.css";
+import Swal from "sweetalert2";
 
 function Login() {
   const navigate = useNavigate();
@@ -15,21 +20,34 @@ function Login() {
 
   async function onSubmitHandler(event) {
     event.preventDefault();
-  
+
     try {
       const response = await login({ username, password });
       console.log(response);
-  
+
       if (response?.data?.token) {
         putAccessToken(response.data.token);
-        Swal.fire({
-          position: "top-center",
-          icon: "success",
-          title: "Berhasil Login!",
-          showConfirmButton: false,
-        }).then(() => setTimeout[2000] ,navigate('/homePage'));
+        putUsername(response.data.username);
+        putIsAdmin(response.data.isAdmin);
+        if (response.data.isAdmin) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Berhasil Login!",
+            showConfirmButton: false,
+          }).then(() => setTimeout[2000], navigate("/admin"));
+        } else {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Berhasil Login!",
+            showConfirmButton: false,
+          }).then(() => setTimeout[2000], navigate("/homePage"));
+        }
       } else {
-        throw new Error("Username atau password Anda salah. Silakan coba lagi.");
+        throw new Error(
+          "Username atau password Anda salah. Silakan coba lagi."
+        );
       }
     } catch (error) {
       Swal.fire({
@@ -74,7 +92,9 @@ function Login() {
                 />
               </Form.Group>
               <Form.Group className="row-md-6 text-start">
-                <Form.Label className="text-dark fs-5 mt-2">Password</Form.Label>
+                <Form.Label className="text-dark fs-5 mt-2">
+                  Password
+                </Form.Label>
                 <Form.Control
                   className="py-2 fs-6"
                   type="password"

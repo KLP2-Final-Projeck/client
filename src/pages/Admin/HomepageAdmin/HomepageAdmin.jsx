@@ -8,6 +8,7 @@ import DonationVector from "../../../assets/DonationVector.jpg";
 import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { BASE_URL } from "../../../utils/network";
 
 function HomepageAdmin() {
   const [totalAksi, setTotalAksi] = useState(null);
@@ -20,7 +21,7 @@ function HomepageAdmin() {
   useEffect(() => {
     const fetchAPI = async () => {
       try {
-        const response = await axios.get("http://localhost:4002/total"); 
+        const response = await axios.get(`http://${BASE_URL}/total`);
         console.log(response);
         const data = response.data;
         setTotalAksi(data.totalAksi.length);
@@ -162,7 +163,7 @@ function HomepageAdmin() {
                       </p>
                       <hr className="my-2 p-0" />
                       <p className="total card-text text-dark m-0 fs-3">
-                      {totalAksi}
+                        {totalAksi}
                       </p>
                       <p className="totalHomepageAdmin card-text text-dark m-0">
                         Total Infografis
@@ -206,7 +207,10 @@ function HomepageAdmin() {
           <h1 className="text-center mt-3 titleAdmin">Admin Garden Plants</h1>
         </div>
       ) : (
-        <div className="mx-auto g-4 d-flex justify-content-center gap-3" style={{ marginTop: "8em" }}>
+        <div
+          className="mx-auto g-4 d-flex justify-content-center gap-3"
+          style={{ marginTop: "8em" }}
+        >
           <Spinner animation="grow" size="sm" variant="success" />
           <Spinner animation="grow" size="sm" variant="success" />
           <Spinner animation="grow" size="sm" variant="success" />

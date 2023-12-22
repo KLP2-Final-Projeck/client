@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import ArticleVector from "../../../assets/ArticleVector.jpg";
 import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import axios from "axios";
+import { BASE_URL } from "../../../utils/network";
 
 const ArtikelAdmin = () => {
   const [artikel, setArtikel] = useState([]);
@@ -16,20 +17,20 @@ const ArtikelAdmin = () => {
   useEffect(() => {
     const fetchTotalArticle = async () => {
       try {
-        const response = await axios.get('http://localhost:4002/artikel'); 
+        const response = await axios.get(`http://${BASE_URL}/artikel`);
         setTotalArticle(response.data.length);
         console.log(response);
       } catch (error) {
-        console.error('Error fetching total articles:', error);
+        console.error("Error fetching total articles:", error);
       }
     };
 
     fetchTotalArticle();
-  }, []); 
+  }, []);
 
   const getArtikel = async () => {
     try {
-      const response = await axios.get("http://localhost:4002/artikel");
+      const response = await axios.get(`http://${BASE_URL}/artikel`);
       setArtikel(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -44,12 +45,12 @@ const ArtikelAdmin = () => {
 
   const deleteArtikel = async (id) => {
     try {
-      await axios.delete(`http://localhost:4002/artikel/${id}`)
+      await axios.delete(`http://${BASE_URL}/artikel/${id}`);
       getArtikel();
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   // if (localStorage.getItem("role") == null) {
   //   Swal.fire({
@@ -175,30 +176,37 @@ const ArtikelAdmin = () => {
                     </tr>
                   ) : (
                     artikel.map((item) => (
-                      <tr
-                        key={item.id}
-                      >
-                        <th scope="row" className="me-5" style={{ cursor: "pointer" }}>
+                      <tr key={item.id}>
+                        <th
+                          scope="row"
+                          className="me-5"
+                          style={{ cursor: "pointer" }}
+                        >
                           <img
                             src={item.image}
                             alt="name"
                             className="img-artikel w-100"
                           />
                         </th>
-                        <td style={{ cursor: "pointer" }}>{item.titleArtikel}</td>
+                        <td style={{ cursor: "pointer" }}>
+                          {item.titleArtikel}
+                        </td>
                         <td>{item.category}</td>
                         <td>{item.author}</td>
                         <td>{item.date}</td>
                         <td>
                           <div className="row justify-content-center gy-4">
                             <div className="col-4 px-1">
-                              <Link to={`/admin/artikel/UpdateArtikelAdmin/${item.id}`} className="btn p-0 text-success w-100 ">
+                              <Link
+                                to={`/admin/artikel/UpdateArtikelAdmin/${item.id}`}
+                                className="btn p-0 text-success w-100 "
+                              >
                                 <FaPen />
                               </Link>
                             </div>
                             <div className="col-4 px-1">
                               <button
-                                onClick={() =>  deleteArtikel(item.id)}
+                                onClick={() => deleteArtikel(item.id)}
                                 className="btn p-0 text-danger w-100"
                               >
                                 <FaTrashAlt />
@@ -217,6 +225,6 @@ const ArtikelAdmin = () => {
       </div>
     </>
   );
-}
+};
 
 export default ArtikelAdmin;

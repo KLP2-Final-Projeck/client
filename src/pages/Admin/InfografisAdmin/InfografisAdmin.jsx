@@ -6,20 +6,21 @@ import "./InfografisAdmin.css";
 import { Spinner } from "react-bootstrap";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { BASE_URL } from "../../../utils/network";
 
 const InfografisAdmin = () => {
   const [infografis, setInfografis] = useState([]);
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const getInfografis = async () => {
     try {
-      const response = await axios.get("http://localhost:4002/infografis");
+      const response = await axios.get(`http://${BASE_URL}/infografis`);
       setInfografis(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
@@ -29,12 +30,12 @@ const InfografisAdmin = () => {
 
   const deleteUser = async (id) => {
     try {
-        await axios.delete(`http://localhost:4002/infografis/${id}`)
-        getInfografis();
+      await axios.delete(`http://${BASE_URL}/infografis/${id}`);
+      getInfografis();
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-}
+  };
 
   // if (localStorage.getItem("role") == null) {
   //   Swal.fire({
@@ -122,41 +123,42 @@ const InfografisAdmin = () => {
                       </td>
                     </tr>
                   ) : (
-                      infografis.map((item) => (
-                        <tr key={item.id}>
-                          <td className="">
-                            <img
-                              src={item.gambar}
-                              alt="name"
-                              className="img-artikel w-100"
-                              style={{ height: "20em" }}
-                            />
-                          </td>
-                          <td className="text-center">{item.judul}</td>
-                          <td className="text-center">{item.url}</td>
-                          <td>
-                            <div className="row d-flex justify-content-center">
-                              <div className="col-2 w-25">
-                                <Link to={`/admin/infografis/update-infografis/${item.id}`}
-                                  className="btn p-0 text-success w-100"
-                                  onClick=""
-                                >
-                                  <FaPen />
-                                </Link>
-                              </div>
-                              <div className="col-2 w-25">
-                                <button
-                                  onClick={() => deleteUser(item.id)}
-                                  className="btn p-0 text-danger w-100"
-                                >
-                                  <FaTrashAlt />
-                                </button>
-                              </div>
+                    infografis.map((item) => (
+                      <tr key={item.id}>
+                        <td className="">
+                          <img
+                            src={item.gambar}
+                            alt="name"
+                            className="img-artikel w-100"
+                            style={{ height: "20em" }}
+                          />
+                        </td>
+                        <td className="text-center">{item.judul}</td>
+                        <td className="text-center">{item.url}</td>
+                        <td>
+                          <div className="row d-flex justify-content-center">
+                            <div className="col-2 w-25">
+                              <Link
+                                to={`/admin/infografis/update-infografis/${item.id}`}
+                                className="btn p-0 text-success w-100"
+                                onClick=""
+                              >
+                                <FaPen />
+                              </Link>
                             </div>
-                          </td>
-                        </tr>
-                      ))
-                    )}
+                            <div className="col-2 w-25">
+                              <button
+                                onClick={() => deleteUser(item.id)}
+                                className="btn p-0 text-danger w-100"
+                              >
+                                <FaTrashAlt />
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
@@ -165,6 +167,6 @@ const InfografisAdmin = () => {
       </div>
     </>
   );
-}
+};
 
 export default InfografisAdmin;

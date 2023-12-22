@@ -3,17 +3,18 @@ import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from "../../../utils/network";
 
 const UpdateInfografisAdmin = () => {
-  const [judul, setJudul] = useState('');
+  const [judul, setJudul] = useState("");
   const [gambar, setGambar] = useState(null);
-  const [url, setUrl] = useState('');
-  const {id} = useParams();
+  const [url, setUrl] = useState("");
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() =>{
+  useEffect(() => {
     getInfografisbyId();
-  },[]);
+  }, []);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -24,9 +25,9 @@ const UpdateInfografisAdmin = () => {
       reader.onloadend = () => {
         try {
           setGambar(reader.result);
-          console.log('Gambar setelah diubah:', reader.result);
+          console.log("Gambar setelah diubah:", reader.result);
         } catch (error) {
-          console.error('Error konversi gambar:', error);
+          console.error("Error konversi gambar:", error);
         }
       };
 
@@ -37,23 +38,25 @@ const UpdateInfografisAdmin = () => {
   const infografisSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:4002/infografis/${id}`, {
-        judul, gambar, url
+      const response = await axios.put(`http://${BASE_URL}/infografis/${id}`, {
+        judul,
+        gambar,
+        url,
       });
-      navigate('/admin/infografis')
+      navigate("/admin/infografis");
       console.log(response);
-      console.log('Respon dari server:', response.data);
+      console.log("Respon dari server:", response.data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   const getInfografisbyId = async () => {
-    const response = await axios.get(`http://localhost:4002/infografis/${id}`);
+    const response = await axios.get(`http://${BASE_URL}/infografis/${id}`);
     setJudul(response.data.judul);
     setGambar(response.data.gambar);
     setUrl(response.data.url);
-  }
+  };
 
   // useEffect(() => {
   // if (localStorage.getItem("role") == null) {
@@ -138,9 +141,7 @@ const UpdateInfografisAdmin = () => {
                 </div>
 
                 <div className="form-group row pt-3">
-                  <label className="col-sm-2 col-form-label">
-                    Gambar
-                  </label>
+                  <label className="col-sm-2 col-form-label">Gambar</label>
                   <div className="col-md-5">
                     <input
                       type="file"
@@ -160,23 +161,29 @@ const UpdateInfografisAdmin = () => {
                   >
                     Cancel
                   </button>
-                  <button type="submit" onClick={(e) => Swal.fire({
-                    position: "top-center",
-                    icon: "success",
-                    title: "Infografis Berhasil di Update!",
-                    showConfirmButton: false,
-                    timer: 1500
-                  }).then(() => navigate("/admin/infografis"))} className="btn btn-primary">
+                  <button
+                    type="submit"
+                    onClick={(e) =>
+                      Swal.fire({
+                        position: "top-center",
+                        icon: "success",
+                        title: "Infografis Berhasil di Update!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                      }).then(() => navigate("/admin/infografis"))
+                    }
+                    className="btn btn-primary"
+                  >
                     Update
                   </button>
                 </div>
               </form>
             </div>
           </div>
-        </div >
-      </div >
+        </div>
+      </div>
     </>
   );
-}
+};
 
 export default UpdateInfografisAdmin;

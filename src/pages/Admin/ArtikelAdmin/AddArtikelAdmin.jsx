@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { BASE_URL } from "../../../utils/network";
 
 const AddArtikelAdmin = () => {
   const [titleArtikel, setTitleArtikel] = useState("");
@@ -33,9 +34,9 @@ const AddArtikelAdmin = () => {
       reader.onloadend = () => {
         try {
           setImages(reader.result);
-          console.log('Gambar setelah diubah:', reader.result);
+          console.log("Gambar setelah diubah:", reader.result);
         } catch (error) {
-          console.error('Error konversi gambar:', error);
+          console.error("Error konversi gambar:", error);
         }
       };
 
@@ -46,8 +47,13 @@ const AddArtikelAdmin = () => {
   const ArtikelSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4002/artikel', {
-        titleArtikel, descArtikel, author, date, category, image
+      const response = await axios.post(`http://${BASE_URL}/artikel`, {
+        titleArtikel,
+        descArtikel,
+        author,
+        date,
+        category,
+        image,
       });
       console.log(response);
 
@@ -67,9 +73,9 @@ const AddArtikelAdmin = () => {
       setDesc8("");
       setDesc9("");
       setDesc10("");
-      console.log('Respon dari server:', response.data);
+      console.log("Respon dari server:", response.data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -198,7 +204,6 @@ const AddArtikelAdmin = () => {
                     />
                   </div>
                 </div>
-
 
                 <div className="form-group row pt-3">
                   <label htmlFor="images" className="col-sm-2 col-form-label">
@@ -393,13 +398,19 @@ const AddArtikelAdmin = () => {
                   >
                     Cancel
                   </button>
-                  <button onClick={() => Swal.fire({
-                    position: "top-center",
-                    icon: "success",
-                    title: "Artikel Berhasil di Tambahkan!",
-                    showConfirmButton: false,
-                    timer: 1500
-                  }).then(() => navigate("/admin/artikel"))} type="submit" className="btn btn-primary">
+                  <button
+                    onClick={() =>
+                      Swal.fire({
+                        position: "top-center",
+                        icon: "success",
+                        title: "Artikel Berhasil di Tambahkan!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                      }).then(() => navigate("/admin/artikel"))
+                    }
+                    type="submit"
+                    className="btn btn-primary"
+                  >
                     Save
                   </button>
                 </div>
@@ -410,6 +421,6 @@ const AddArtikelAdmin = () => {
       </div>
     </>
   );
-}
+};
 
 export default AddArtikelAdmin;

@@ -8,6 +8,7 @@ import logoImage from "../../assets/logo.png";
 import "./Home.css";
 import Footer from "../Footer/Footer";
 import axios from "axios";
+import { BASE_URL } from "../../utils/network";
 
 // import Search from "../Searchpage/Search";
 
@@ -19,18 +20,16 @@ const HomePage = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:4002/artikel");
+      const response = await axios.get(`http://${BASE_URL}/artikel`);
       setArtikel(response.data);
     } catch (error) {
       console.error("Error fetching articles:", error);
-    } 
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-
-
 
   return (
     <>

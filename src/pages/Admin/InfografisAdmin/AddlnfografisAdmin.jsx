@@ -3,11 +3,12 @@ import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from "../../../utils/network";
 
 const AddInfografisAdmin = () => {
-  const [judul, setJudul] = useState('');
+  const [judul, setJudul] = useState("");
   const [gambar, setGambar] = useState(null);
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
 
   const navigate = useNavigate();
 
@@ -20,9 +21,9 @@ const AddInfografisAdmin = () => {
       reader.onloadend = () => {
         try {
           setGambar(reader.result);
-          console.log('Gambar setelah diubah:', reader.result);
+          console.log("Gambar setelah diubah:", reader.result);
         } catch (error) {
-          console.error('Error konversi gambar:', error);
+          console.error("Error konversi gambar:", error);
         }
       };
 
@@ -33,17 +34,19 @@ const AddInfografisAdmin = () => {
   const infografisSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4002/infografis', {
-        judul, gambar, url
+      const response = await axios.post(`http://${BASE_URL}/infografis`, {
+        judul,
+        gambar,
+        url,
       });
       console.log(response);
 
-      setJudul('');
+      setJudul("");
       setGambar(null);
-      setUrl('');
-      console.log('Respon dari server:', response.data);
+      setUrl("");
+      console.log("Respon dari server:", response.data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -130,9 +133,7 @@ const AddInfografisAdmin = () => {
                 </div>
 
                 <div className="form-group row pt-3">
-                  <label className="col-sm-2 col-form-label">
-                    Gambar
-                  </label>
+                  <label className="col-sm-2 col-form-label">Gambar</label>
                   <div className="col-md-5">
                     <input
                       type="file"
@@ -152,23 +153,29 @@ const AddInfografisAdmin = () => {
                   >
                     Cancel
                   </button>
-                  <button type="submit" onClick={() => Swal.fire({
-                    position: "top-center",
-                    icon: "success",
-                    title: "Infografis Berhasil di Tambahkan!",
-                    showConfirmButton: false,
-                    timer: 1500
-                  }).then(() => navigate("/admin/infografis"))} className="btn btn-primary">
-                  Save
-                </button>
+                  <button
+                    type="submit"
+                    onClick={() =>
+                      Swal.fire({
+                        position: "top-center",
+                        icon: "success",
+                        title: "Infografis Berhasil di Tambahkan!",
+                        showConfirmButton: false,
+                        timer: 1500,
+                      }).then(() => navigate("/admin/infografis"))
+                    }
+                    className="btn btn-primary"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div >
-      </div >
     </>
   );
-}
+};
 
 export default AddInfografisAdmin;

@@ -1,6 +1,7 @@
-import axios from 'axios';
-const Swal = require('sweetalert2');
-const BASE_URL = "http://localhost:4002";
+import axios from "axios";
+const Swal = require("sweetalert2");
+const BASE_URL = "103.127.97.117:4002";
+// const BASE_URL = `localhost:4003`;
 
 function getAccessToken() {
   return localStorage.getItem("accessToken");
@@ -10,13 +11,25 @@ function putAccessToken(accessToken) {
   return localStorage.setItem("accessToken", accessToken);
 }
 
+function putUsername(username) {
+  return localStorage.setItem("username", username);
+}
+
+function getIsAdmin() {
+  return localStorage.getItem("isAdmin");
+}
+
+function putIsAdmin(isAdmin) {
+  return localStorage.setItem("isAdmin", isAdmin);
+}
+
 function deleteAccessToken() {
   return localStorage.removeItem("accessToken");
 }
 
 // async function getUserDataFromDatabase(token) {
 //   try {
-//     const response = await axios.get(`${BASE_URL}/user`, {
+//     const response = await axios.get(`http://${BASE_URL}/user`, {
 //       headers: {
 //         Authorization: `Bearer ${token}`,
 //       },
@@ -40,7 +53,7 @@ async function fetchWithToken(url, options = {}) {
 }
 
 async function login({ username, password }) {
-  const response = await fetch(`${BASE_URL}/login`, {
+  const response = await fetch(`http://${BASE_URL}/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -57,14 +70,20 @@ async function login({ username, password }) {
   return { error: false, code: response.status, data: responseJson.data };
 }
 
-async function register({ username, password, email, telepon = "",isAdmin = false }) {
+async function register({
+  username,
+  password,
+  email,
+  telepon = "",
+  isAdmin = false,
+}) {
   try {
-    const response = await fetch(`${BASE_URL}/register`, {
+    const response = await fetch(`http://${BASE_URL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password, email, telepon ,isAdmin }),
+      body: JSON.stringify({ username, password, email, telepon, isAdmin }),
     });
 
     const responseJson = await response.json();
@@ -85,7 +104,7 @@ async function register({ username, password, email, telepon = "",isAdmin = fals
 }
 
 async function getUserLogged() {
-  const response = await fetchWithToken(`${BASE_URL}/Users`);
+  const response = await fetchWithToken(`http://${BASE_URL}/Users`);
   const responseJson = await response.json();
 
   if (response.status >= 400) {
@@ -96,7 +115,7 @@ async function getUserLogged() {
 }
 
 async function addNote({ title, body }) {
-  const response = await fetchWithToken(`${BASE_URL}/notes`, {
+  const response = await fetchWithToken(`http://${BASE_URL}/notes`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -114,7 +133,7 @@ async function addNote({ title, body }) {
 }
 
 async function getNotes() {
-  const response = await fetchWithToken(`${BASE_URL}/notes`);
+  const response = await fetchWithToken(`http://${BASE_URL}/notes`);
   const responseJson = await response.json();
 
   if (response.status >= 400) {
@@ -125,7 +144,7 @@ async function getNotes() {
 }
 
 async function getUser(id) {
-  const response = await fetchWithToken(`${BASE_URL}/User/:${id}`);
+  const response = await fetchWithToken(`http://${BASE_URL}/User/:${id}`);
   const responseJson = await response.json();
 
   if (response.status >= 400) {
@@ -136,7 +155,7 @@ async function getUser(id) {
 }
 
 async function deleteNote(id) {
-  const response = await fetchWithToken(`${BASE_URL}/notes/${id}`, {
+  const response = await fetchWithToken(`http://${BASE_URL}/notes/${id}`, {
     method: "DELETE",
   });
 
@@ -152,7 +171,7 @@ async function deleteNote(id) {
 function isUserLoggedIn() {
   const authToken = getAccessToken();
   return !!authToken;
-};
+}
 
 export {
   getAccessToken,
@@ -165,5 +184,9 @@ export {
   getNotes,
   getUser,
   deleteNote,
-  isUserLoggedIn
+  isUserLoggedIn,
+  BASE_URL,
+  putUsername,
+  getIsAdmin,
+  putIsAdmin,
 };

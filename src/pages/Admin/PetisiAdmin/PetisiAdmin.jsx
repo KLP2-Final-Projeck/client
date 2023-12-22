@@ -6,6 +6,7 @@ import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import Swal from "sweetalert2";
 import AksiVector from "../../../assets/AksiVector.jpg";
 import axios from "axios";
+import { BASE_URL } from "../../../utils/network";
 
 function AksiAdmin() {
   const [listAksi, setListAksi] = useState([]);
@@ -20,11 +21,11 @@ function AksiAdmin() {
   useEffect(() => {
     const fetchTotalArticle = async () => {
       try {
-        const response = await axios.get('http://localhost:4002/petisi'); 
+        const response = await axios.get("http://${BASE_URL}/petisi");
         setTotalAksi(response.data.length);
         console.log(response);
       } catch (error) {
-        console.error('Error fetching total articles:', error);
+        console.error("Error fetching total articles:", error);
       }
     };
 
@@ -33,7 +34,7 @@ function AksiAdmin() {
 
   const getPetisi = async () => {
     try {
-      const response = await axios.get("http://localhost:4002/petisi");
+      const response = await axios.get(`http://${BASE_URL}/petisi`);
       setListAksi(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -48,12 +49,12 @@ function AksiAdmin() {
 
   const deletePetisi = async (id) => {
     try {
-      await axios.delete(`http://localhost:4002/petisi/${id}`);
+      await axios.delete(`http://${BASE_URL}/petisi/${id}`);
       getPetisi();
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -97,7 +98,7 @@ function AksiAdmin() {
           <div className="col-md-12 d-flex justify-content-end ">
             <button
               className="btn bg-primary text-white text-sm px-5 py-2 d-flex gap-2 justify-content-end align-items-center"
-              onClick={() => navigate('/admin/petisi/AddPetisiAdmin')}
+              onClick={() => navigate("/admin/petisi/AddPetisiAdmin")}
             >
               <FaPlus /> Tambah Aksi
             </button>

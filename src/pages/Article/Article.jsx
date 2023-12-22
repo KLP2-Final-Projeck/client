@@ -5,6 +5,7 @@ import Navbars from "../Navbar";
 import Search from "../Search/Search";
 import Infografis from "../Infografis/Infografis";
 import axios from "axios";
+import { BASE_URL } from "../../utils/network";
 
 function Article() {
   const navigate = useNavigate();
@@ -17,19 +18,18 @@ function Article() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:4002/artikel");
+      const response = await axios.get(`http://${BASE_URL}/artikel`);
       setArtikel(response.data);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching articles:", error);
       setIsLoading(false);
-    } 
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-
 
   return (
     <>

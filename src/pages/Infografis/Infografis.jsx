@@ -4,6 +4,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { BASE_URL } from "../../utils/network";
 
 function Infografis() {
   const navigate = useNavigate();
@@ -15,20 +16,18 @@ function Infografis() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:4002/infografis");
+      const response = await axios.get(`http://${BASE_URL}/infografis`);
       setInfografis(response.data);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching articles:", error);
       setIsLoading(false);
-    } 
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-
-
 
   useEffect(() => {
     setFilterData(infografis.slice(0, 3));
