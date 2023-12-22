@@ -13,20 +13,20 @@ import axios from "axios";
 
 const HomePage = () => {
   const navigate = useNavigate();
-  const [articles, setArticles] = useState([]);
+  const [artikel, setArtikel] = useState([]);
   const [saveState, setSaveState] = useState(3);
+  // const [loading, setLoading] = useState(true);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http://localhost:4002/artikel");
+      setArtikel(response.data);
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+    } 
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("");
-        const data = await response.json();
-        setArticles(data);
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -66,21 +66,21 @@ const HomePage = () => {
       </div>
 
       <div className="container">
-        {articles.length == 0 ? (
-          <div className="text-center  d-flex justify-content-center align-items-center my-5 py-5">
+        {artikel.length == 0 ? (
+          <div className="text-start  d-flex justify-content-center align-items-center my-5 py-5">
             <span className="mx-2 h1">loading</span>
             <Spinner animation="border" variant="dark" />
           </div>
         ) : (
-          articles.map((item) => (
+          artikel.map((item) => (
             <div
-              className="articlesContent"
+              className="articlesContent text-start"
               key={item.id}
               onClick={() => navigate(`/article/${item.id}`)}
             >
               <div className="row ms-1 me-1 mt-5 mb-5">
                 <div className="col-md-4 p-0 me-4">
-                  <img id="articlesImage" src={item.url} alt="Images " />
+                  <img id="articlesImage" src={item.image} alt="Images " />
                 </div>
                 <div
                   id="detailPreviewArticles"
@@ -90,9 +90,9 @@ const HomePage = () => {
                     className="wrapperLinkTitleArticles"
                     onClick={() => navigate(`/article/${item.id}`)}
                   >
-                    <h3 className="titleArticles">{item.titleArticle}</h3>
+                    <h3 className="titleArticles">{item.titleArtikel}</h3>
                   </a>
-                  <p className="descArticles text-dark">{item.descArticle}</p>
+                  <p className="descArticles text-dark">{item.descArtikel}</p>
                   <p className="AuthorAndDate ">
                     <span id="authorArticle"> {item.author}</span>
                     <span id="dot2"></span>{" "}
