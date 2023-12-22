@@ -13,28 +13,6 @@ function PetisiTerkait() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Menggantikan dispatch(getDataAksi());
-    // Menggunakan fetch atau axios untuk mendapatkan data dari API
-    // Misalnya, fetch("URL_API").then((response) => response.json()).then((data) => setListAksi(data));
-    // setIsLoading(false) setelah mendapatkan data
-
-    // Contoh menggunakan async/await dan fetch:
-    const fetchData = async () => {
-      try {
-        const response = await fetch("URL_API");
-        const data = await response.json();
-        setListAksi(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
     setAkasiTerkait(listAksi.filter((item) => item.hashtag.includes(hashtag)));
   }, [listAksi, hashtag]);
 

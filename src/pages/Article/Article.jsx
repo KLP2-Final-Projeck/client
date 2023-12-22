@@ -12,33 +12,6 @@ function Article() {
   const [showButton, setShowButton] = useState(true);
   const [filterData, setFilterData] = useState([]);
 
-  useEffect(() => {
-    const fetchArticle = async () => {
-      try {
-        const response = await fetch("URL_ARTICLE_API");
-        const data = await response.json();
-        setArticle(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchArticle();
-  }, []);
-
-  useEffect(() => {
-    setFilterData(article.slice(0, 3));
-  }, [article]);
-
-  useEffect(() => {
-    setFilterData(article.slice(0, limit));
-    if (article.length > 0 && limit >= article.length) {
-      setShowButton(false);
-    }
-  }, [limit, article]);
-
   return (
     <>
       <Navbars />

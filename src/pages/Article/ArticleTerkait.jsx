@@ -11,26 +11,6 @@ function ArticleTerkait() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchArticle = async () => {
-      try {
-        const response = await fetch("URL_ARTICLE_API");
-        const data = await response.json();
-        setArticle(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchArticle();
-  }, []);
-
-  useEffect(() => {
-    setArticleTerkait(article.filter((item) => item.hashtag.includes(tag)));
-  }, [article, tag]);
-
   return (
     <>
       {" "}

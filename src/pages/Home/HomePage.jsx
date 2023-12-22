@@ -7,6 +7,7 @@ import ShareLogo from "../../assets/shareLogo.png";
 import PeopleLogo from "../../assets/peopleLogo.png";
 import "./HomePage.css";
 import Footer from "../Footer/Footer";
+import axios from "axios";
 
 // import Search from "../Searchpage/Search";
 
@@ -18,7 +19,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("your-api-endpoint");
+        const response = await axios.get("");
         const data = await response.json();
         setArticles(data);
       } catch (error) {
@@ -28,21 +29,6 @@ const HomePage = () => {
 
     fetchData();
   }, []);
-
-  const handleShowAnotherArticle = () => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("actual-api-endpoint-url");
-        const data = await response.json();
-        setArticles(data);
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-      }
-    };
-
-    fetchData();
-    setSaveState((prevSaveState) => prevSaveState + 3);
-  };
 
   return (
     <>

@@ -21,16 +21,6 @@ const Donasi = () => {
     Nomor_Rekening: "",
   });
 
-  useEffect(() => {
-    if (localStorage.length > 0) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        Nama: localStorage.getItem("username"),
-        Nomor_Telepon: localStorage.getItem("telepon"),
-        Email: localStorage.getItem("email"),
-      }));
-    }
-  }, []);
 
   const [data, setData] = useState({
     originalValue: null,

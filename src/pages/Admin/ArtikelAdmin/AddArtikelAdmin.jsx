@@ -74,35 +74,35 @@ const AddArtikelAdmin = () => {
   };
 
   // useEffect(() => {
-    // if (localStorage.getItem("role") == null) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Terjadi Kesalahan !",
-    //     text: "Anda Harus Login Terlebih Dahulu",
-    //     confirm: {
-    //       text: "OK",
-    //       value: true,
-    //     },
-    //   }).then((value) => {
-    //     if (value) {
-    //       navigate("/login");
-    //     }
-    //   });
-    // } else if (localStorage.getItem("role") === "user") {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Anda Bukan Admin !",
-    //     text: "User Tidak Bisa Akses Ke Halaman Admin!",
-    //     confirm: {
-    //       text: "OK",
-    //       value: true,
-    //     },
-    //   }).then((value) => {
-    //     if (value) {
-    //       navigate("/");
-    //     }
-    //   });
-    // }
+  // if (localStorage.getItem("role") == null) {
+  //   Swal.fire({
+  //     icon: "error",
+  //     title: "Terjadi Kesalahan !",
+  //     text: "Anda Harus Login Terlebih Dahulu",
+  //     confirm: {
+  //       text: "OK",
+  //       value: true,
+  //     },
+  //   }).then((value) => {
+  //     if (value) {
+  //       navigate("/login");
+  //     }
+  //   });
+  // } else if (localStorage.getItem("role") === "user") {
+  //   Swal.fire({
+  //     icon: "error",
+  //     title: "Anda Bukan Admin !",
+  //     text: "User Tidak Bisa Akses Ke Halaman Admin!",
+  //     confirm: {
+  //       text: "OK",
+  //       value: true,
+  //     },
+  //   }).then((value) => {
+  //     if (value) {
+  //       navigate("/");
+  //     }
+  //   });
+  // }
   // }, []);
 
   return (
@@ -135,21 +135,19 @@ const AddArtikelAdmin = () => {
                 </div>
 
                 <div className="form-group row pt-3">
-                  <label
-                    htmlFor="descArticle"
-                    className="col-sm-2 col-form-label"
-                  >
+                  <label htmlFor="desc1" className="col-sm-2 col-form-label">
                     Desc Article
                   </label>
                   <div className="col-md-5">
-                    <input
-                      name="descArticle"
-                      type="text"
+                    <textarea
                       className="form-control"
-                      id="descArticle"
+                      name="desc1"
+                      id="desc1"
+                      rows="3"
                       value={descArtikel}
                       onChange={(e) => setDescArtikel(e.target.value)}
-                    />
+                      type="text"
+                    ></textarea>
                   </div>
                 </div>
 

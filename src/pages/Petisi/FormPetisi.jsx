@@ -50,21 +50,6 @@ function FormPetisi() {
     }
   };
 
-  const submitDataPetisi = () => {
-    // Gantikan dispatch(submitPetisi(petisi, key, localStorage.getItem("accessToken")));
-    // Menggunakan fetch atau axios untuk mengirim data ke API
-    // Misalnya, fetch("URL_API", { method: "POST", body: JSON.stringify(petisi), headers: { "Content-Type": "application/json" }});
-  };
-
-  const handleInputPetisi = () => {
-    setPetisi({
-      name: localStorage.getItem("username"),
-      email: localStorage.getItem("email"),
-      telepon: localStorage.getItem("telepon"),
-      kota: localStorage.getItem("kota"),
-    });
-  };
-
   return (
     <>
       <Navbars />

@@ -20,23 +20,6 @@ function DetailArticle() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchArticleDetail = async () => {
-      try {
-        // Ganti URL dengan endpoint atau fungsi untuk mengambil data detail artikel
-        const response = await fetch(`URL_ARTICLE_API/${key}`);
-        const data = await response.json();
-        setDetailArticle(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching article detail:", error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchArticleDetail();
-  }, [key]);
-
   const shareUrl = ``;
 
   return (

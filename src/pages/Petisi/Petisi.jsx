@@ -13,25 +13,6 @@ function Petisi() {
   const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
-    // Simulate data fetching
-    const fetchData = async () => {
-      // Assuming fetchData returns an array of items
-      try {
-        // Simulating an API call
-        const response = await fetch("your_api_endpoint");
-        const data = await response.json();
-        setListAksi(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  useEffect(() => {
     setFilterData(listAksi.slice(0, limit));
     if (listAksi.length > 0 && limit >= listAksi.length) {
       setShowButton(false);
