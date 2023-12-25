@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import Navbars from "../Navbar";
 import Search from "../Search/Search";
+import Footer from "../Footer/Footer";
 import Infografis from "../Infografis/Infografis";
 import axios from "axios";
 import { BASE_URL } from "../../utils/network";
@@ -31,6 +32,17 @@ function Article() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setFilterData(artikel.slice(0, 3));
+  }, [artikel]);
+
+  useEffect(() => {
+    setFilterData(artikel.slice(0, limit));
+    if (artikel.length > 0 && limit >= artikel.length) {
+      setShowButton(false);
+    }
+  }, [limit]);
+
   return (
     <>
       <Navbars />
@@ -46,7 +58,7 @@ function Article() {
                 <Spinner animation="border" variant="dark" />
               </div>
             ) : (
-              artikel.map((item) => (
+              filterData.map((item) => (
                 <div
                   key={item.id}
                   className="col-md-6 col-lg-4 mb-3 pt-4 pb-4"
@@ -102,6 +114,7 @@ function Article() {
         )}
       </div>
       <Infografis />
+      <Footer />
     </>
   );
 }

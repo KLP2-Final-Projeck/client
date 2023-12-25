@@ -1,18 +1,58 @@
 import React, { useState } from "react";
 import "./Search.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
   const [result, setResult] = useState(null);
   const navigate = useNavigate();
 
+  // const handleSubmit = async () => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:4002/artikel/?query=${searchValue}`);
+  //     const data = await response.json();
+
+  //     setResult(data);
+  //   } catch (error) {
+  //     console.error("Error fetching search data:", error);
+  //     setResult("error");
+  //   }
+  // };
+
+  // const handleSubmit = async () => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:4002/artikel/search?query=${searchValue}`);
+      
+  //     // Periksa apakah responsenya berhasil (status code 2xx)
+  //     if (response.status !== 200) {
+  //       throw new Error(`HTTP error! Status: ${response.status}`);
+  //     }
+
+  //     setResult(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching search data:", error);
+  //     setResult("error");
+  //   }
+  // };
+
   const handleSubmit = async () => {
     try {
-      const response = await fetch(`/api/search?query=${searchValue}`);
-      const data = await response.json();
-
-      setResult(data);
+      const response = await axios.post("http://localhost:4002/artikel", { query: searchValue });
+      
+      // Periksa apakah responsenya berhasil (status code 2xx)
+      if (response.status === 200) {
+        // Check apakah hasil pencarian dari server sesuai dengan format yang diharapkan
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          setResult(response.data);
+        } else {
+          // Tidak ada hasil pencarian yang sesuai
+          setResult([]);
+        }
+      } else {
+        // HTTP error
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
     } catch (error) {
       console.error("Error fetching search data:", error);
       setResult("error");
@@ -88,18 +128,18 @@ const Search = () => {
                   className="card card-artikel h-100"
                   onClick={() => navigate(`/article/${item.id}`)}
                 >
-                  <img src={item.url} className="card-img-top" alt="artikel" />
+                  <img src={item.image} className="card-img-top" alt="artikel" />
                   <div className="card-body">
                     <a className="wrapperLinkTitleArticles" href="/">
                       <h5 className="card-title text-break">
-                        {item.titleArticle}
+                        {item.titleArtikel}
                       </h5>
                     </a>
                     <p
                       className="card-text"
                       style={{ color: "#595959", textAlign: "justify" }}
                     >
-                      {item.descArticle}
+                      {item.descArtikel}
                     </p>
                     <p className="fw-bold">
                       <span className="author text-secondary">

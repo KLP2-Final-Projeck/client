@@ -16,7 +16,6 @@ const HomePage = () => {
   const navigate = useNavigate();
   const [artikel, setArtikel] = useState([]);
   const [saveState, setSaveState] = useState(3);
-  // const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {

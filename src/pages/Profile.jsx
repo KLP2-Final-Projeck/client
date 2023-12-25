@@ -1,35 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserLogged, getNotes } from "../utils/network";
+import axios from "axios";
 
 function Profile() {
-  const navigate = useNavigate();
-  const { username } = useParams();
   const [profil, setProfil] = useState({ data: {} });
   const [setNotes] = useState([]);
+  const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [id, setId] = useState('');
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const result = await getUserLogged();
-      if (!result.error) {
-        setProfil(result);
-      } else {
-        console.error(`Error fetching profile: ${result.code}`);
-      }
-    };
-    fetchProfile();
-  }, []);
+    const username = localStorage.getItem('username');
+    const id = localStorage.getItem('id');
 
-  useEffect(() => {
-    getNotes()
-      .then((result) => {
-        const data = result.data;
-        setNotes(data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    if (username, id) {
+      setUsername(username);
+      setId(id);
+    }
   }, []);
 
   return (
@@ -38,19 +28,16 @@ function Profile() {
       <Form className="row g-3 m-5">
         <Form.Group className="col-md-12 text-start">
           <Form.Label>User Id</Form.Label>
-          <Form.Control type="text" value={profil.data.id} disabled />
+          <Form.Control type="text" value={id} disabled />
         </Form.Group>
         <Form.Group className="col-md-12 text-start">
           <Form.Label>Username</Form.Label>
-          <Form.Control type="text" value={profil.data.username} disabled />
+          <Form.Control type="text" value={username} disabled />
         </Form.Group>
         <Form.Group className="col-md-12 text-start">
           <Form.Label>Join On</Form.Label>
           <Form.Control
             type="text"
-            value={
-              profil.data.createdAt ? profil.data.createdAt.slice(0, 10) : ""
-            }
             disabled
           />
         </Form.Group>

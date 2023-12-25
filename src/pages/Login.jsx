@@ -6,6 +6,7 @@ import {
   putAccessToken,
   putUsername,
   putIsAdmin,
+  getId
 } from "../utils/network";
 import Navbar from "./Navbar";
 import Footer from "./Footer/Footer";
@@ -29,6 +30,7 @@ function Login() {
         putAccessToken(response.data.token);
         putUsername(response.data.username);
         putIsAdmin(response.data.isAdmin);
+        getId(response.data.id);
         if (response.data.isAdmin) {
           Swal.fire({
             position: "top-center",

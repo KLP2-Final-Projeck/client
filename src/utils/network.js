@@ -1,7 +1,7 @@
 import axios from "axios";
 const Swal = require("sweetalert2");
-const BASE_URL = "103.127.97.117:4002";
-// const BASE_URL = `localhost:4003`;
+// const BASE_URL = "103.127.97.117:4002";
+const BASE_URL = `localhost:4002`;
 
 function getAccessToken() {
   return localStorage.getItem("accessToken");
@@ -15,8 +15,12 @@ function putUsername(username) {
   return localStorage.setItem("username", username);
 }
 
-function getIsAdmin() {
-  return localStorage.getItem("isAdmin");
+function getId(id) {
+  return localStorage.setItem("id", id);
+}
+
+function getIsAdmin(isAdmin) {
+  return localStorage.getItem("isAdmin", isAdmin);
 }
 
 function putIsAdmin(isAdmin) {
@@ -189,4 +193,5 @@ export {
   putUsername,
   getIsAdmin,
   putIsAdmin,
+  getId
 };

@@ -4,6 +4,9 @@ import "./Petisi.css";
 import { FaUsers } from "react-icons/fa";
 import Spinner from "react-bootstrap/Spinner";
 import Navbars from "../Navbar";
+import Footer from "../Footer/Footer";
+import { BASE_URL } from "../../utils/network";
+import axios from "axios";
 
 function Petisi() {
   const [listAksi, setListAksi] = useState([]);
@@ -12,20 +15,39 @@ function Petisi() {
   const [showButton, setShowButton] = useState(true);
   const [filterData, setFilterData] = useState([]);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`http://${BASE_URL}/petisi`);
+      setListAksi(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    setFilterData(listAksi.slice(0, 3));
+  }, [listAksi]);
+
   useEffect(() => {
     setFilterData(listAksi.slice(0, limit));
     if (listAksi.length > 0 && limit >= listAksi.length) {
       setShowButton(false);
     }
-  }, [listAksi, limit]);
+  }, [limit]);
 
   return (
     <>
       <Navbars />
-      <div className="container mt-4">
+      <div className="container mt-4 mb-2">
         <div className="artikel" id="artikel" style={{ marginTop: "110px" }}>
           <h3 className="text-start ">Tanpa Aksi, Tidak Ada Perubahan </h3>
-          <p className="sub-title">
+          <p className="sub-title text-start">
             Bergabunglah dengan kami dan tandatangani petisi untuk mendukung
             perubahan positif.
           </p>
@@ -70,7 +92,7 @@ function Petisi() {
                 <div className="col-md-4 col-sm-6  pt-4 pb-4" key={item.id}>
                   <div className="card card-aksi h-100">
                     <img
-                      src={item.url}
+                      src={item.image}
                       className="card-img-top h-100 sm-h-100"
                       alt=" "
                     />
@@ -80,13 +102,13 @@ function Petisi() {
                       </h6>
                       <p className="card-text sub-title d-flex align-items-center gap-2">
                         <FaUsers />
-                        {item.numberofsupport === 0 ? (
+                        {item.numberofSupport === 0 ? (
                           <span className="fw-medium fs-6">
                             Belum ada dukungan
                           </span>
-                        ) : item.numberofsupport < item.target ? (
+                        ) : item.numberofSupport < item.target ? (
                           <span className="fw-medium fs-6">
-                            {item.numberofsupport} orang mendukung
+                            {item.numberofSupport} orang mendukung
                           </span>
                         ) : (
                           <span className="fw-medium fs-6">
@@ -94,8 +116,8 @@ function Petisi() {
                           </span>
                         )}
                       </p>
-                      <Link className="link-aksi" to={`/aksi/${item.id}`}>
-                        {item.numberofsupport < item.target ? (
+                      <Link className="link-aksi" to={`/petisi/detailpetisi/${item.id}`}>
+                        {item.numberofSupport < item.target ? (
                           <h5 className="btn btn-main d-block">
                             Pelajari Selengkapnya
                           </h5>
@@ -125,6 +147,7 @@ function Petisi() {
           </div>
         )}
       </div>
+      <Footer/>
     </>
   );
 }

@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Navbars from "../Navbar";
+import axios from "axios";
 
 function FormPetisi() {
-  const { key } = useParams();
   const navigate = useNavigate();
   const [petisi, setPetisi] = useState({
     email: "",
@@ -13,7 +13,6 @@ function FormPetisi() {
     telepon: "",
   });
 
-  // handle change petisi
   const handleChangePetisi = (event) => {
     setPetisi({
       ...petisi,
@@ -44,7 +43,7 @@ function FormPetisi() {
         cancelButtonText: "Batal",
       }).then((result) => {
         if (result.isConfirmed) {
-          submitDataPetisi();
+          // submitDataPetisi();
         }
       });
     }
@@ -71,7 +70,7 @@ function FormPetisi() {
             value={petisi.name}
             name="name"
             onChange={handleChangePetisi}
-            onClick={handleInputPetisi}
+            // onClick={handleInputPetisi}
           />
         </div>
         <div className="mb-3 text-start">
@@ -86,7 +85,7 @@ function FormPetisi() {
             value={petisi.email}
             name="email"
             onChange={handleChangePetisi}
-            onClick={handleInputPetisi}
+            // onClick={handleInputPetisi}
           />
         </div>
         <div className="mb-3 text-start">
@@ -101,7 +100,7 @@ function FormPetisi() {
             value={petisi.telepon}
             name="tlp"
             onChange={handleChangePetisi}
-            onClick={handleInputPetisi}
+            // onClick={handleInputPetisi}
           />
         </div>
         <div className="mb-3 text-start">
@@ -116,7 +115,7 @@ function FormPetisi() {
             value={petisi.kota}
             name="city"
             onChange={handleChangePetisi}
-            onClick={handleInputPetisi}
+            // onClick={handleInputPetisi}
           />
         </div>
         <div className="form-check text-secondary text-start">

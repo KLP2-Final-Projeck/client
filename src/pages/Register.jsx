@@ -15,7 +15,6 @@ function Register() {
 
   function onSubmitHandler(event) {
     event.preventDefault();
-    // TODO HANDLE REGISTER HERE
     register({ username, password, email }).then((response) => {
       console.log(response);
       if (response.code == 200) {

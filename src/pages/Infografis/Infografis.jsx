@@ -59,7 +59,7 @@ function Infografis() {
 
   return (
     <>
-      <div className="container pt-5">
+      <div className="container pt-5 mb-3">
         <div className="infografis" id="infografis">
           <h3 className="text-start mb-3">Infografis</h3>
           <div style={{ border: "0.5px solid #bfbfbf" }}></div>

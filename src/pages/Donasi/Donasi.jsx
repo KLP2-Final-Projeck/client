@@ -5,91 +5,92 @@ import Swal from "sweetalert2";
 import Navbar from "../Navbar";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer/Footer"
+import axios from "axios";
 
 const Donasi = () => {
-
   const navigate = useNavigate();
-
-  const ref = useRef();
-
+  const UserId = localStorage.getItem("id");
   const [inputMoney, setInputMoney] = useState("");
-
   const [formData, setFormData] = useState({
-    Nama: "",
-    Nomor_Telepon: "",
-    Email: "",
-    Nomor_Rekening: "",
-  });
-
-
-  const [data, setData] = useState({
-    originalValue: null,
-    formattedValue: null,
+    nama: "",
+    email: "",
+    nomorHp: "",
+    nomorRekening: "",
+    UserId: UserId,
   });
 
   const handleInputMoney = (event) => {
-    if (typeof event == "number") {
+    if (typeof event === "number") {
       const getButtonValue = event;
-      const formattedValue = Number(getButtonValue).toLocaleString("id-ID");
-      setInputMoney(formattedValue);
+      const formatedValue = Number(getButtonValue).toLocaleString("id-ID");
+      setInputMoney(formatedValue);
 
       setData({
-        originalValue: getButtonValue,
-        formattedValue: `Rp ${formattedValue}`,
+        nominalValue: getButtonValue,
+        formatedValue: `Rp ${formatedValue}`,
       });
-    } else if (event.target.value == "") {
+    } else if (event.target.value === "") {
       setInputMoney("");
-    } else if (typeof event == "object") {
+    } else if (typeof event === "object") {
       const inputNumber = parseInt(event.target.value.replace(/\D/g, ""), 10);
-      const formattedValue = inputNumber.toLocaleString("id-ID");
-      setInputMoney(formattedValue);
+      const formatedValue = inputNumber.toLocaleString("id-ID");
+      setInputMoney(formatedValue);
 
       setData({
-        originalValue: inputNumber,
-        formattedValue: `Rp ${formattedValue}`,
+        nominalValue: inputNumber,
+        formatedValue: `Rp ${formatedValue}`,
       });
     }
   };
 
+  const [data, setData] = useState({
+    nominalValue: null,
+    formatedValue: null,
+  });
+
   const handleFormData = (event) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
+    const { name, value } = event.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (
-      formData.Email == "" ||
-      formData.Nama == "" ||
-      formData.Nomor_Rekening == "" ||
-      formData.Nomor_Telepon == ""
-    ) {
+    try {
+      if (
+        formData.email === "" ||
+        formData.nama === "" ||
+        formData.nomorRekening === "" ||
+        formData.nomorHp === ""
+      ) {
+        throw new Error("Harap periksa inputan Anda!");
+      }
+  
+      if (!UserId) {
+        throw new Error("Anda harus login terlebih dahulu");
+      }
+  
+      const response = await axios.post("http://localhost:4002/donasi", {
+        ...formData,
+        nominalValue: data.nominalValue,
+      });
+  
+      console.log(response.data);
+  
+      Swal.fire({
+        icon: "success",
+        title: "Donasi berhasil dikirim!",
+      }).then(() => navigate('/homePage'));
+
+    } catch (error) {
+      console.error(error);
+  
       Swal.fire({
         icon: "error",
-        title: "Harap Periksa Inputan Anda !",
-      });
-    } else if (localStorage.getItem("role") == null) {
-      Swal.fire({
-        icon: "error",
-        title: "Terjadi Kesalahan !",
-        text: "Anda Harus Login Terlebih Dahulu",
-        confirm: {
-          text: "OK",
-          value: true,
-        },
-      }).then((value) => {
-        if (value) {
-          // navigate("/login");
-        }
-      });
-    } else {
-      setData((prevDatas) => {
-        return {
-          ...prevDatas,
-          ...formData,
-        };
+        title: "Terjadi Kesalahan!",
+        text: error.message,
       });
     }
   };
@@ -108,10 +109,9 @@ const Donasi = () => {
             </p>
           </div>
         </div>
-
         <div className="colDonasi col p-0 m-0">
           <div className="wrapperInputDonasi ">
-            <form ref={ref} onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <p className="DescDonasi">Masukan jumlah nominal donasi anda :</p>
               <div className="input-group">
                 <span className="input-group-text text-white" id="basic-addon1">
@@ -162,8 +162,8 @@ const Donasi = () => {
                   <input
                     type="text"
                     className="form-control m-0 shadow-none"
-                    name="Nama"
-                    value={formData.Nama}
+                    name="nama"
+                    value={formData.nama}
                     onChange={handleFormData}
                     required
                   />
@@ -174,8 +174,8 @@ const Donasi = () => {
                   <input
                     type="number"
                     className="form-control m-0 shadow-none"
-                    name="Nomor_Telepon"
-                    value={formData.Nomor_Telepon}
+                    name="nomorHp"
+                    value={formData.nomorHp}
                     onChange={handleFormData}
                     required
                   />
@@ -186,8 +186,8 @@ const Donasi = () => {
                   <input
                     type="email"
                     className="form-control m-0 shadow-none"
-                    name="Email"
-                    value={formData.Email}
+                    name="email"
+                    value={formData.email}
                     onChange={handleFormData}
                     required
                   />
@@ -198,8 +198,8 @@ const Donasi = () => {
                   <input
                     type="number"
                     className="form-control m-0 shadow-none"
-                    name="Nomor_Rekening"
-                    value={formData.Nomor_Rekening}
+                    name="nomorRekening"
+                    value={formData.nomorRekening}
                     onChange={handleFormData}
                     required
                   />

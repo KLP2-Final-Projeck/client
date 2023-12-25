@@ -11,6 +11,14 @@
     color: #ffffff !important;
 }
 
+.width{
+    width: 90%;
+}
+
+.top{
+    margin-top: 70px;
+}
+
 .wrapperLinkTitleArticles {
     cursor: pointer;
     color: black;

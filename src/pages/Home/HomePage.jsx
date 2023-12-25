@@ -16,6 +16,9 @@ const HomePage = () => {
   const navigate = useNavigate();
   const [artikel, setArtikel] = useState([]);
   const [saveState, setSaveState] = useState(3);
+  const [limit, setLimit] = useState(3);
+  const [showButton, setShowButton] = useState(true);
+  const [filterData, setFilterData] = useState([]);
   // const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
@@ -30,6 +33,17 @@ const HomePage = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    setFilterData(artikel.slice(0, 3));
+  }, [artikel]);
+
+  useEffect(() => {
+    setFilterData(artikel.slice(0, limit));
+    if (artikel.length > 0 && limit >= artikel.length) {
+      setShowButton(false);
+    }
+  }, [limit]);
 
   return (
     <>
@@ -53,7 +67,7 @@ const HomePage = () => {
             </p>
             <a
               className="btn btnHighlight1 mb-5"
-              onClick={() => navigate("/aksi")}
+              onClick={() => navigate("/Petisi")}
             >
               Ikuti Aksi
             </a>
@@ -73,7 +87,7 @@ const HomePage = () => {
             <Spinner animation="border" variant="dark" />
           </div>
         ) : (
-          artikel.map((item) => (
+          filterData.map((item) => (
             <div
               className="articlesContent text-start"
               key={item.id}

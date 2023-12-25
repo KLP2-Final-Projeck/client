@@ -21,7 +21,7 @@ function AksiAdmin() {
   useEffect(() => {
     const fetchTotalArticle = async () => {
       try {
-        const response = await axios.get("http://${BASE_URL}/petisi");
+        const response = await axios.get(`http://${BASE_URL}/petisi`);
         setTotalAksi(response.data.length);
         console.log(response);
       } catch (error) {

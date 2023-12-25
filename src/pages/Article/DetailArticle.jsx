@@ -1,112 +1,100 @@
 import { useEffect, useState } from "react";
 import { FaClock } from "react-icons/fa";
-// import Komentar from "../Komentar/Komentar";
 import { useParams } from "react-router";
 import { Spinner } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Navbars from "../Navbar";
-import {
-  FacebookIcon,
-  FacebookShareButton,
-  TwitterIcon,
-  TwitterShareButton,
-  WhatsappIcon,
-  WhatsappShareButton,
-} from "react-share";
+import axios from "axios";
+import Footer from "../Footer/Footer";
+import ArticleTerkait from "./ArticleTerkait";
+import { BASE_URL } from "../../utils/network";
+import Komentar from "../komentar/komentar";
+import './Article.css'
 
 function DetailArticle() {
-  const { key } = useParams();
-  const [detailArticle, setDetailArticle] = useState({});
+  const [titleArtikel, setTitleArtikel] = useState("");
+  const [descArtikel, setDescArtikel] = useState("");
+  const [author, setAuthor] = useState("");
+  const [date, setDate] = useState("");
+  const [category, setCategory] = useState("");
+  const [image, setImages] = useState(null);
+  const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const navigate = useNavigate();
 
-  const shareUrl = ``;
+  const getArtikelbyId = async () => {
+    const response = await axios.get(`http://${BASE_URL}/artikel/${id}`);
+    console.log(response);
+    setTitleArtikel(response.data.titleArtikel);
+    setDescArtikel(response.data.descArtikel);
+    setAuthor(response.data.author);
+    setDate(response.data.date);
+    setCategory(response.data.category);
+    setImages(response.data.image);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    try {
+      getArtikelbyId();
+    } catch (error) {
+      console.error('Error fetching article by ID:', error.message);
+      setIsLoading(false);
+    }
+  });
 
   return (
     <>
       <Navbars />
-      <div id="articlesContent" className="container pt-4">
-        {isLoading ? (
-          <div className="text-center  d-flex justify-content-center align-items-center my-5 py-5">
-            <span className="mx-2 h1">loading</span>
-            <Spinner animation="border" variant="dark" />
+      <div id="articlesContent" className="container top p-5">
+        <>
+          <div className="col-md-12 mb-3">
+            <p className="hashTag m-0 p-0">
+              <span id="cathegory">
+              </span>
+              <Link
+                style={{ textDecoration: "none" }}
+              >
+              </Link>
+            </p>
+            <h1 className="titleArticle" id="titleArticle">
+              {titleArtikel}{" "}
+            </h1>
+            <p className="text-dark">
+              By{" "}
+              <span id="author" className="fw-bold">
+                {" "}
+                {author}
+              </span>
+              <i className="ms-1 me-1">
+                <FaClock />
+              </i>
+              <span
+                id="date"
+                className="fw-bold"
+                style={{ color: "#6f7376" }}
+              >
+                {date}
+              </span>
+            </p>
           </div>
-        ) : (
-          <>
-            {Object.keys(detailArticle).length !== 0 && (
-              <>
-                <div className="col-md-12 mb-3">
-                  <p className="hashTag m-0 p-0">
-                    <span id="cathegory">{detailArticle.category}</span>{" "}
-                    <span id="dot"></span>
-                    {detailArticle.hashtag.map((hashtag) => (
-                      <Link
-                        key={hashtag}
-                        to={`/article/terkait/${hashtag}`}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <span
-                          id="hashTag"
-                          className="hashTagArticle text-decoration-none me-2"
-                        >
-                          #{hashtag}
-                        </span>
-                      </Link>
-                    ))}
-                  </p>
-                  <h1 className="titleArticle" id="titleArticle">
-                    {detailArticle.titleArticle}{" "}
-                  </h1>
-                  <p className="text-dark">
-                    By{" "}
-                    <span id="author" className="fw-bold">
-                      {" "}
-                      {detailArticle.author}
-                    </span>
-                    <i className="ms-1 me-1">
-                      <FaClock />
-                    </i>
-                    <span
-                      id="date"
-                      className="fw-bold"
-                      style={{ color: "#6f7376" }}
-                    >
-                      {detailArticle.date}
-                    </span>
-                  </p>
-                  <div className="d-flex gap-2">
-                    <FacebookShareButton url={shareUrl}>
-                      <FacebookIcon size={32} />
-                    </FacebookShareButton>
-                    <TwitterShareButton url={shareUrl}>
-                      <TwitterIcon size={32} />
-                    </TwitterShareButton>
-                    <WhatsappShareButton url={shareUrl}>
-                      <WhatsappIcon size={32} />
-                    </WhatsappShareButton>
-                  </div>
-                </div>
-                <div className="col-md-12 p-0 me-4 text-center">
-                  <img
-                    className="articlesImage img-fluid"
-                    src={detailArticle.url}
-                    alt=""
-                    id="images"
-                  />
-                </div>
-                <div className="paragraf col-md-12 ps-0 pe-0 pt-5 ps-3">
-                  {[...Array(10)].map((_, index) => (
-                    <p key={`paragraf${index + 1}`} className="text-dark">
-                      {detailArticle[`desc${index + 1}`]}
-                    </p>
-                  ))}
-                </div>
-              </>
-            )}
-          </>
-        )}
-        {/* <Komentar /> */}
+          <div className="col-md-12 p-0 me-4 text-center">
+            <img
+              className="articlesImage img-fluid"
+              src={image}
+              alt=""
+              id="images"
+            />
+          </div>
+          <div className="container d-flex justify-content-center paragraf col-md-12 ps-0 pe-0 pt-5 ">
+            <p className="text-dark width">
+              {descArtikel}
+            </p>
+          </div>
+        </>
       </div>
+      <ArticleTerkait />
+      <Komentar />
+      <Footer />
     </>
   );
 }

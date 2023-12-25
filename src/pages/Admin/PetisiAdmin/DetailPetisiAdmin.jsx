@@ -77,38 +77,6 @@ const UpdatePetisiAdmin = () => {
     setDesc2(response.data.desc2);
   };
 
-  // useEffect(() => {
-  // if (localStorage.getItem("role") == null) {
-  //   Swal.fire({
-  //     icon: "error",
-  //     title: "Terjadi Kesalahan !",
-  //     text: "Anda Harus Login Terlebih Dahulu",
-  //     confirm: {
-  //       text: "OK",
-  //       value: true,
-  //     },
-  //   }).then((value) => {
-  //     if (value) {
-  //       navigate("/login");
-  //     }
-  //   });
-  // } else if (localStorage.getItem("role") === "user") {
-  //   Swal.fire({
-  //     icon: "error",
-  //     title: "Anda Bukan Admin !",
-  //     text: "User Tidak Bisa Akses Ke Halaman Admin!",
-  //     confirm: {
-  //       text: "OK",
-  //       value: true,
-  //     },
-  //   }).then((value) => {
-  //     if (value) {
-  //       navigate("/");
-  //     }
-  //   });
-  // }
-  // }, []);
-
   return (
     <>
       <NavbarAdmin />
