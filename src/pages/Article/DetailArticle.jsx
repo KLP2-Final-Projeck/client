@@ -9,6 +9,8 @@ import Footer from "../Footer/Footer";
 import ArticleTerkait from "./ArticleTerkait";
 import { BASE_URL } from "../../utils/network";
 import Komentar from "../komentar/komentar";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
 import './Article.css'
 
 function DetailArticle() {
@@ -42,6 +44,13 @@ function DetailArticle() {
     }
   });
 
+  const formatTime = (dateTime) => {
+    const indonesianTime = dayjs(dateTime)
+      .locale("id")
+      .format("D MMMM YYYY");
+    return indonesianTime;
+  };
+
   return (
     <>
       <Navbars />
@@ -73,7 +82,7 @@ function DetailArticle() {
                 className="fw-bold"
                 style={{ color: "#6f7376" }}
               >
-                {date}
+                {formatTime(date)}
               </span>
             </p>
           </div>

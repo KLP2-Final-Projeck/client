@@ -31,21 +31,6 @@ function deleteAccessToken() {
   return localStorage.removeItem("accessToken");
 }
 
-// async function getUserDataFromDatabase(token) {
-//   try {
-//     const response = await axios.get(`http://${BASE_URL}/user`, {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
-//     console.log(response);
-//     return response.data.username;
-//   } catch (error) {
-//     console.error('Error fetching user data:', error);
-//     return { error: true, code: error.response?.status || 'UNKNOWN_ERROR' };
-//   }
-// }
-
 async function fetchWithToken(url, options = {}) {
   return fetch(url, {
     ...options,

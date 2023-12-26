@@ -29,6 +29,7 @@ import UserUpdate from "./pages/Admin/User/UserUpdate";
 import UpdateArtikelAdmin from "./pages/Admin/ArtikelAdmin/DetailArtikelAdmin";
 import AddPetisiAdmin from "./pages/Admin/PetisiAdmin/AddPetisiAdmin";
 import UpdatePetisiAdmin from "./pages/Admin/PetisiAdmin/DetailPetisiAdmin";
+import Komentar from "./pages/komentar/komentar";
 import Swal from "sweetalert2";
 
 function NeedLogin() {
@@ -78,6 +79,7 @@ function App() {
             <Route path="/forum" element={<Forum />} />
             <Route path="/petisi" element={<Petisi />} />
             <Route path="/petisi/detailpetisi/:id" element={<DetailPetisi />} />
+            <Route path="/komentar" element={<Komentar />} />
             {/* <Route path="/petisi/formpetisi" element={<FormPetisi />} /> */}
             {/* Admin */}
             <Route element={<NeedAdmin />}>

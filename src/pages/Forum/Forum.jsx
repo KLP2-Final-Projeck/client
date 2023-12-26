@@ -4,23 +4,50 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 import backgroundImage from "../../assets/fr4.jpg";
 import Navbars from "../Navbar";
+import axios from "axios";
+import { BASE_URL } from "../../utils/network";
 
 const ChatApp = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [media, setMedia] = useState(null);
+  const [topic, setTopic] = useState("");
+  const [thread, setThreat] = useState("");
+  const [post, setPost] = useState("");
+
+  const ForumSubmit = async (e) => {
+    const userId = localStorage.getItem('id')
+    e.preventDefault();
+    try {
+      const response = await axios.post(`http://${BASE_URL}/forum`, {
+        topic,
+        thread,
+        post, 
+        UserId : userId
+      });
+      console.log(response);
+
+      setTopic("");
+      setThreat("");
+      setPost("");
+      console.log("Respon dari server:", response.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const handleSendMessage = () => {
-    if (newMessage.trim() !== "" || media) {
-      const newMessageObj = {
-        sender: "You",
-        text: newMessage,
-        media: media,
+    const username = localStorage.getItem('username');
+    if (topic.trim() !== "" || thread) {
+      const topicObj = {
+        sender: username,
+        topic: topic,
+        thread: thread,
       };
 
-      setMessages([...messages, newMessageObj]);
+      setTopic([...topic,  topicObj]);
       setNewMessage("");
-      setMedia(null);
+      setThreat(null);
     }
   };
 
@@ -65,17 +92,17 @@ const ChatApp = () => {
                       <div>
                         <strong>{message.sender}:</strong>
                       </div>
-                      {message.text && <div>{message.text}</div>}
-                      {message.media && (
+                      {message.topic && <div>{message.topic}</div>}
+                      {message.thread && (
                         <div>
                           <img
-                            src={URL.createObjectURL(message.media)}
+                            src={URL.createObjectURL(message.thread)}
                             alt="Media"
                             style={{ maxWidth: "100%", maxHeight: "200px" }}
                           />
                           <Button
                             variant="link"
-                            onClick={() => handleMediaDownload(message.media)}
+                            onClick={() => handleMediaDownload(message.thread)}
                             className="download-icon"
                           >
                             <FontAwesomeIcon icon={faDownload} />
@@ -86,22 +113,24 @@ const ChatApp = () => {
                   ))}
                 </div>
                 <div className="card-footer">
-                  <InputGroup>
-                    <Form.Control
-                      type="text"
-                      placeholder="Type your message..."
-                      value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
-                    />
-                    <Form.Control
-                      type="file"
-                      accept="image/*"
-                      onChange={handleMediaChange}
-                    />
-                    <Button variant="success" onClick={handleSendMessage}>
-                      Send
-                    </Button>
-                  </InputGroup>
+                  <Form onSubmit={ForumSubmit}>
+                    <InputGroup>
+                      <Form.Control
+                        type="text"
+                        placeholder="Type your message..."
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                      />
+                      <Form.Control
+                        type="file"
+                        accept="image/*"
+                        onChange={handleMediaChange}
+                      />
+                      <Button variant="success" onClick={handleSendMessage}>
+                        Send
+                      </Button>
+                    </InputGroup>
+                  </Form>
                 </div>
               </div>
             </div>
@@ -113,3 +142,7 @@ const ChatApp = () => {
 };
 
 export default ChatApp;
+
+
+
+

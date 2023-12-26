@@ -40,17 +40,13 @@ const Search = () => {
     try {
       const response = await axios.post("http://localhost:4002/artikel", { query: searchValue });
       
-      // Periksa apakah responsenya berhasil (status code 2xx)
       if (response.status === 200) {
-        // Check apakah hasil pencarian dari server sesuai dengan format yang diharapkan
         if (Array.isArray(response.data) && response.data.length > 0) {
           setResult(response.data);
         } else {
-          // Tidak ada hasil pencarian yang sesuai
           setResult([]);
         }
       } else {
-        // HTTP error
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
     } catch (error) {
@@ -98,7 +94,6 @@ const Search = () => {
             </button>
           </div>
         </div>
-
         <div
           className="row pt-4"
           style={{ marginBottom: "6em" }}

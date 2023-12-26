@@ -3,14 +3,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import Navbars from "../Navbar";
 import axios from "axios";
+import { BASE_URL } from "../../utils/network";
 
-function FormPetisi() {
+const FormPetisi = () => {
+  const petisiId = useParams().id;
+  console.log(petisiId);
   const navigate = useNavigate();
+  const userId = localStorage.getItem('id');
   const [petisi, setPetisi] = useState({
     email: "",
     kota: "",
     name: "",
-    telepon: "",
+    NomorHp: "",
+    UserId: userId,
+    PetisiId: petisiId
   });
 
   const handleChangePetisi = (event) => {
@@ -20,32 +26,23 @@ function FormPetisi() {
     });
   };
 
-  const handleSubmitPetisi = (e) => {
+  const handleSubmitPetisi = async (e) => {
     e.preventDefault();
-    if (localStorage.length === 0) {
-      Swal.fire({
-        icon: "error",
-        title: "Terjadi Kesalahan !",
-        text: "Anda Harus Login Terlebih Dahulu",
-        confirmButtonText: "OK",
-      }).then(() => {
-        navigate("/login");
+    try {
+      const response = await axios.post(`http://${BASE_URL}/formpetisi`, {
+       ...petisi,
       });
-    } else {
+      console.log(response.data);
       Swal.fire({
-        title: "Konfirmasi Data",
-        text: "Apakah data yang diisi sudah benar?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Konfirmasi",
-        cancelButtonText: "Batal",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // submitDataPetisi();
-        }
-      });
+        position: "top-center",
+        icon: "success",
+        title: "Tanda Tangan Aksi Berhasil!",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => navigate("/Petisi"))
+      setPetisi("");
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
@@ -53,7 +50,6 @@ function FormPetisi() {
     <>
       <Navbars />
       <form
-        style={{ marginLeft: "100px", marginRight: "100px" }}
         className="form-group mb-4"
         id="form-petisi"
         onSubmit={handleSubmitPetisi}
@@ -70,7 +66,6 @@ function FormPetisi() {
             value={petisi.name}
             name="name"
             onChange={handleChangePetisi}
-            // onClick={handleInputPetisi}
           />
         </div>
         <div className="mb-3 text-start">
@@ -85,7 +80,6 @@ function FormPetisi() {
             value={petisi.email}
             name="email"
             onChange={handleChangePetisi}
-            // onClick={handleInputPetisi}
           />
         </div>
         <div className="mb-3 text-start">
@@ -97,10 +91,9 @@ function FormPetisi() {
             className="form-control"
             id="nomorTelepone"
             required
-            value={petisi.telepon}
-            name="tlp"
+            value={petisi.NomorHp}
+            name="NomorHp"
             onChange={handleChangePetisi}
-            // onClick={handleInputPetisi}
           />
         </div>
         <div className="mb-3 text-start">
@@ -113,12 +106,11 @@ function FormPetisi() {
             id="kota"
             required
             value={petisi.kota}
-            name="city"
+            name="kota"
             onChange={handleChangePetisi}
-            // onClick={handleInputPetisi}
           />
         </div>
-        <div className="form-check text-secondary text-start">
+        <div className="form-check text-secondary text-start mb-3">
           <input
             className="form-check-input"
             type="checkbox"
@@ -132,6 +124,7 @@ function FormPetisi() {
           </label>
         </div>
         <button
+          type="submit"
           className="btn btn-petisi btn-danger w-100 "
           data-bs-toggle="modal1"
           data-bs-target="#staticBackdrop1"

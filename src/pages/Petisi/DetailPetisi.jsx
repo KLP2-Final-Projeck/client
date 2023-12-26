@@ -6,6 +6,7 @@ import Image from "../../assets/InfografisVector.jpg";
 import FormPetisi from "./FormPetisi";
 import { FaUsers } from "react-icons/fa";
 import Navbars from "../Navbar";
+import Footer from "../Footer/Footer";
 import axios from "axios";
 import { BASE_URL } from "../../utils/network";
 
@@ -18,198 +19,84 @@ function DetailPetisi() {
   const [listAksi, setListAksi] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [setKontributor] = useState([]);
-
+  const [numberofSupport, setNumberofSupport] = useState("");
+  const [target, setTarget] = useState("");
+  const [datafrom, setDataFrom] = useState("");
   const fetchData = async () => {
-    const response = await axios.get(`http://${BASE_URL}/petisi/${id}`);
-    setDetailAksi(response.data);
-    setIsLoading(false);
-    // try {
-    // } catch (error) {
-    //   console.error("Error fetching data:", error);
-    //   setIsLoading(false);
-    // }
+    try {
+      const response = await axios.get(`http://${BASE_URL}/petisi/${id}`);
+      const DataForm = await axios.get(`http://${BASE_URL}/formpetisi`);
+      setNumberofSupport(response.data.setNumberofSupport);
+      setTarget(response.data.target);
+      setDataFrom(DataForm.data)
+      setDetailAksi(response.data);
+      console.log(response);
+      console.log(DataForm);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-
-  // let renderHeaderPetisi = () => {
-  //   if (detailAksi.numberofsupport === 0) {
-  //     return (
-  //       <h5 className="fw-bold" id="heading-form">
-  //         Belum ada dukungan
-  //       </h5>
-  //     );
-  //   } else if (detailAksi.numberofsupport < detailAksi.target) {
-  //     return (
-  //       <h5 className="fw-bold" id="heading-form">
-  //         {detailAksi.numberofsupport} orang yang sudah mendukung
-  //       </h5>
-  //     );
-  //   } else {
-  //     return (
-  //       <h5 className="fw-bold" id="heading-form">
-  //         Petisi Mencapai Kemenangan
-  //       </h5>
-  //     );
-  //   }
-  // };
-
-  // let renderTextPetisi = () => {
-  //   if (detailAksi.numberofsupport < detailAksi.target) {
-  //     if (showForm) {
-  //       return (
-  //         <p className="fw-semibold paragraf" id="paragarfPetisi">
-  //           {detailAksi.teks}
-  //         </p>
-  //       );
-  //     } else {
-  //       return (
-  //         <div>
-  //           <h3 className="heading-form">
-  //             {" "}
-  //             Terima Kasih Sudah Berkontribusi 🎉
-  //           </h3>
-  //           <p className="fw-semibold paragraf" id="paragarfPetisi">
-  //             jadilah Aktivis Digital Dengan membagikan petisi ini
-  //           </p>
-  //         </div>
-  //       );
-  //     }
-  //   } else {
-  //     return (
-  //       <p className="fw-semibold paragraf " id="paragarfPetisi">
-  //         mari kita lanjutkan perjuangan kita dengan bergabung dalam aksi-aksi
-  //         lain yang sejenis untuk terus memperjuangkan hak-hak kita dan membawa
-  //         perubahan positif bagi masyarakat. Bersama-sama kita bisa mewujudkan
-  //         perubahan yang kita inginkan!
-  //       </p>
-  //     );
-  //   }
-  // };
-
-  // const renderBar = () => {
-  //   let Persentase =
-  //     (detailAksi.numberofsupport / detailAksi.target) * 100 + "%";
-  //   return { width: Persentase };
-
-  // };
-
-
-  // useEffect(() => {
-  // Gantikan dispatch(getDataAksi());
-  // Menggunakan fetch atau axios untuk mendapatkan data dari API
-  // Misalnya, fetch("URL_API").then((response) => response.json()).then((data) => setListAksi(data));
-  // setIsLoading(false) setelah mendapatkan data
-
-  // Contoh menggunakan async/await dan fetch:
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await fetch("URL_API");
-  //     const data = await response.json();
-  //     setListAksi(data);
-  //     setIsLoading(false);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // fetchData();
-  // }, []);
-
-  // useEffect(() => {
-  //   setAkasiLainnya(listAksi.filter((item) => item.id !== id));
-  // }, [listAksi, id]);
-
-  // useEffect(() => {
-  //   const fetchKontributor = async () => {
-  //     try {
-  //       const response = await fetch(`URL_API/kontributor/${id}`);
-  //       const data = await response.json();
-  //       setKontributor(data);
-  //     } catch (error) {
-  //       console.error("Error fetching kontributor data:", error);
-  //     }
-  //   };
-
-  //   fetchKontributor();
-  // }, [id]);
+  const renderBar = () => {
+    let Persentase =
+      (detailAksi.numberofsupport / detailAksi.target) * 100 + "%";
+    return { width: Persentase };
+  };
 
   return (
     <>
       <Navbars />
-      {isLoading ? (
-        <div className="text-center  d-flex justify-content-center align-items-center my-5 py-5">
-          <Spinner
-            className="mx-4"
-            animation="grow"
-            size="sm"
-            variant="success"
-          />
-          <Spinner
-            className="mx-4"
-            animation="grow"
-            size="sm"
-            variant="success"
-          />
-          <Spinner
-            className="mx-4"
-            animation="grow"
-            size="sm"
-            variant="success"
-          />
-          <Spinner
-            className="mx-4"
-            animation="grow"
-            size="sm"
-            variant="success"
-          />
-          <Spinner
-            className="mx-4"
-            animation="grow"
-            size="sm"
-            variant="success"
-          />
-        </div>
-      ) : (
-        // detailAksi.map((item) => (
+      <div className="container mb-3">
+        {isLoading ? (
+          <div className="text-center  d-flex justify-content-center align-items-center my-5 py-5">
+            <Spinner
+              className="mx-4"
+              animation="grow"
+              size="sm"
+              variant="success"
+            />
+            <Spinner
+              className="mx-4"
+              animation="grow"
+              size="sm"
+              variant="success"
+            />
+            <Spinner
+              className="mx-4"
+              animation="grow"
+              size="sm"
+              variant="success"
+            />
+            <Spinner
+              className="mx-4"
+              animation="grow"
+              size="sm"
+              variant="success"
+            />
+            <Spinner
+              className="mx-4"
+              animation="grow"
+              size="sm"
+              variant="success"
+            />
+          </div>
+        ) : (
+          // detailAksi.map((item) => (
           <div className="container pt-5 detail-aksi">
             <div className="row gx-5">
-              <div className="col-md-8">
-                <div id="aksi">
-                  <p className="hashTag  m-0 p-0">
-                    <Link to={`/aksi/`} style={{ textDecoration: "none" }}>
-                      <span id="cathegory">Petisi</span> <span id="dot"> </span>
-                    </Link>
-                    {/* {typeof detailAksi.hashtag != "undefined" && */}
-
-                    <Link
-                      key="1"
-                      // to={`/aksi/terkait/${item}`}
-                      style={{ textDecoration: "none" }}
-                    >
-                      <span id="hashTag" className="p-2 hashTag ">
-                        {/* # {item} */}
-                      </span>
-                    </Link>
-                    {/* // )} */}
-                  </p>
-                  <div></div>
+              <div className="col-md-8 mt-3">
+                <div className="mt-5" id="aksi">
                   <h3 id="title">{detailAksi.title}</h3>
-                  {/* <img
-                  className="img-fluid pt-3"
-                  width="100%"
-                  src={detailAksi.url}
-                  alt="image content"
-                  id="image"
-                /> */}
                   <img
                     className="img-fluid pt-3"
-                    width="90%"
+                    width="100%"
                     src={detailAksi.image}
-                    alt=""
+                    alt="image content"
                   />
                   <div className="paragraf pt-4">
                     <p className="mb-4 paragraf">{detailAksi.desc}</p>
@@ -220,160 +107,33 @@ function DetailPetisi() {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4 pt-5">
-                <div id="aksi">
-                  {/* {renderHeaderPetisi()} */}
-                  {detailAksi.numberofsupport < detailAksi.target ? (
-                    <div>
-                      <div
-                        className="progress"
-                        id="bar"
-                        role="progressbar"
-                        aria-label="Basic example"
-                        aria-valuenow={10}
-                        aria-valuemin={0}
-                        aria-valuemax={100}
-                      >
-                        <div
-                          className="progress-bar bg-success"
-                          id="bar-petisi"
-                        // style={renderBar()}
-                        />
-                      </div>
-                      <figcaption
-                        className="figure-caption text-end"
-                        id="figcaption"
-                      >
-                        <span id="caption-bar" />
-                        {detailAksi.numberofsupport}/{detailAksi.target}
-                        <span id="target" /> dukungan
-                      </figcaption>
-                    </div>
-                  ) : (
-                    <span></span>
-                  )}
-                  {/* {renderTextPetisi()} */}
-
-                  {/* {detailAksi.numberofsupport === detailAksi.target ? ( */}
-                  <Link className="link-aksi" to={`/aksi`}>
-                    <button
-                      className="btn btn-petisi btn-main w-100 mb-4 "
-                      data-bs-toggle="modal1"
-                      data-bs-target="#staticBackdrop1"
-                    >
-                      <i className="fa fa-pen-nib me-2"> </i> Ikuti Aksi Yang
-                      Lainnya
-                    </button>
-                  </Link>
-                  {/* // ) : showForm ? ( */}
-                  {/* <div> */}
-                  {/* <FormPetisi /> */}
-                  {/* </div> */}
-                  {/* // )  */}
-                  {/* // : ( */}
-                  {/* // )} */}
+              <div className="col-md-4 pt-5 mt-5" key={detailAksi.id}>
+                <div className="marginTop" id="aksi">
+                  <p className="card-text  kontributorAksi sub-title d-flex align-items-center gap-2">
+                    <FaUsers />
+                    {detailAksi.numberofSupport === 0 ? (
+                      <span className="fw-medium fs-6">
+                        Belum ada dukungan
+                      </span>
+                    ) : detailAksi.numberofSupport < detailAksi.target ? (
+                      <span className="fw-medium fs-6">
+                        {detailAksi.numberofSupport} orang mendukung
+                      </span>
+                    ) : (
+                      <span className="fw-medium fs-6">
+                        Petisi Mencapai Kemenangan
+                      </span>
+                    )}
+                  </p>
+                  <FormPetisi />
                 </div>
               </div>
             </div>
           </div>
-        // ))
-      )}
-      <div className="container mt-4 mb-0">
-        <div className="aksi">
-          <div style={{ border: "0.5px solid #bfbfbf" }} className="mb-0"></div>
-          <div className="row pt-2">
-            {isLoading ? (
-              <div className="text-center  d-flex justify-content-center align-items-center my-5 py-5">
-                <Spinner
-                  className="mx-4"
-                  animation="grow"
-                  size="sm"
-                  variant="success"
-                />
-                <Spinner
-                  className="mx-4"
-                  animation="grow"
-                  size="sm"
-                  variant="success"
-                />
-                <Spinner
-                  className="mx-4"
-                  animation="grow"
-                  size="sm"
-                  variant="success"
-                />
-                <Spinner
-                  className="mx-4"
-                  animation="grow"
-                  size="sm"
-                  variant="success"
-                />
-                <Spinner
-                  className="mx-4"
-                  animation="grow"
-                  size="sm"
-                  variant="success"
-                />
-              </div>
-            ) : (
-              aksiLainnya.map((item) => (
-                <div key={item.id} className="aksiContent">
-                  <div className="row ms-1 me-1 mt-5 mb-5">
-                    <div className="col-md-4 p-0 me-4">
-                      <img id="aksiImage" src={detailAksi.image} alt="Images " />
-                    </div>
-                    <div className="col-md-7 ps-0 pe-0 mt-2">
-                      <p className="hashTag  m-0 p-0">
-                        <Link to={`/aksi/`} style={{ textDecoration: "none" }}>
-                          <span id="cathegory">Petisi</span>{" "}
-                          <span id="dot"> </span>
-                        </Link>
-                        {item != 0 &&
-                          item.hashtag.map((item) => (
-                            <Link
-                              to={`/aksi/terkait/${item}`}
-                              style={{ textDecoration: "none" }}
-                            >
-                              <span id="hashTag" className="p-2 hashTag ">
-                                # {item}
-                              </span>
-                            </Link>
-                          ))}
-                      </p>
-                      <a className="wrapperLinkTitleAksi">
-                        <h3
-                          className="titleAksi"
-                          onClick={() => navigate(`/aksi/${item.id}`)}
-                        >
-                          {detailAksi.title}
-                        </h3>
-                      </a>
-                      <p className="descAksi text-dark wrapText">{detailAksi.desc}</p>
-                      <p className="card-text  kontributorAksi sub-title d-flex align-items-center gap-2">
-                        <FaUsers />
-                        {item.numberofsupport === 0 ? (
-                          <span className="fw-medium fs-6">
-                            Belum ada dukungan
-                          </span>
-                        ) : item.numberofsupport < item.target ? (
-                          <span className="fw-medium fs-6">
-                            {item.numberofsupport} orang mendukung
-                          </span>
-                        ) : (
-                          <span className="fw-medium fs-6">
-                            Petisi Mencapai Kemenangan
-                          </span>
-                        )}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
+          // ))
+        )}
       </div>
-      <FormPetisi />
+      <Footer />
     </>
   );
 }

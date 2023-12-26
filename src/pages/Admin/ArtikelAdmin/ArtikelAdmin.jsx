@@ -3,6 +3,8 @@ import { FaTrashAlt, FaPen, FaPlus } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import Swal from "sweetalert2";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
 import ArticleVector from "../../../assets/ArticleVector.jpg";
 import NavbarAdmin from "../NavbarAdmin/NavbarAdmin";
 import axios from "axios";
@@ -50,6 +52,13 @@ const ArtikelAdmin = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const formatTime = (dateTime) => {
+    const indonesianTime = dayjs(dateTime)
+      .locale("id")
+      .format("D MMMM YYYY, HH:mm:ss");
+    return indonesianTime;
   };
 
   return (
@@ -158,7 +167,7 @@ const ArtikelAdmin = () => {
                         </td>
                         <td>{item.category}</td>
                         <td>{item.author}</td>
-                        <td>{item.date}</td>
+                        <td>{formatTime(item.date)}</td>
                         <td>
                           <div className="row justify-content-center gy-4">
                             <div className="col-4 px-1">

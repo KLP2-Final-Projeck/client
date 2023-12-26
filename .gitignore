@@ -23,6 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 /src/pages/Search
-/src/pages/Petisi
-/src/pages/komentar
+
 

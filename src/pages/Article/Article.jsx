@@ -6,6 +6,8 @@ import Search from "../Search/Search";
 import Footer from "../Footer/Footer";
 import Infografis from "../Infografis/Infografis";
 import axios from "axios";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
 import { BASE_URL } from "../../utils/network";
 
 function Article() {
@@ -42,6 +44,13 @@ function Article() {
       setShowButton(false);
     }
   }, [limit]);
+
+  const formatTime = (dateTime) => {
+    const indonesianTime = dayjs(dateTime)
+      .locale("id")
+      .format("D MMMM YYYY");
+    return indonesianTime;
+  };
 
   return (
     <>
@@ -90,7 +99,7 @@ function Article() {
                       <p className="fw-bold" style={{ color: "#6F7376" }}>
                         <span className="author"> {item.author} </span>{" "}
                         <span id="dot2"></span>
-                        <span className="date"> {item.date} </span>
+                        <span className="date"> {formatTime(item.date)} </span>
                       </p>
                     </div>
                   </div>

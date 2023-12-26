@@ -8,10 +8,11 @@ import logoImage from "../../assets/logo.png";
 import "./Home.css";
 import Footer from "../Footer/Footer";
 import axios from "axios";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
 import { BASE_URL } from "../../utils/network";
 
 // import Search from "../Searchpage/Search";
-
 const HomePage = () => {
   const navigate = useNavigate();
   const [artikel, setArtikel] = useState([]);
@@ -29,6 +30,13 @@ const HomePage = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const formatTime = (dateTime) => {
+    const indonesianTime = dayjs(dateTime)
+      .locale("id")
+      .format("D MMMM YYYY");
+    return indonesianTime;
+  };
 
   return (
     <>
@@ -134,7 +142,7 @@ const HomePage = () => {
                   <p className="AuthorAndDate ">
                     <span id="authorArticle"> {item.author}</span>
                     <span id="dot2"></span>{" "}
-                    <span id="dateArticle">{item.date}</span>
+                    <span id="dateArticle">{formatTime(item.date)}</span>
                   </p>
                 </div>
               </div>

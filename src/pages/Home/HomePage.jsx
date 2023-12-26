@@ -6,6 +6,8 @@ import InfoLogo from "../../assets/infoLogo.png";
 import ShareLogo from "../../assets/shareLogo.png";
 import PeopleLogo from "../../assets/peopleLogo.png";
 import "./HomePage.css";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
 import Footer from "../Footer/Footer";
 import axios from "axios";
 import { BASE_URL } from "../../utils/network";
@@ -44,6 +46,13 @@ const HomePage = () => {
       setShowButton(false);
     }
   }, [limit]);
+
+  const formatTime = (dateTime) => {
+    const indonesianTime = dayjs(dateTime)
+      .locale("id")
+      .format("D MMMM YYYY");
+    return indonesianTime;
+  };
 
   return (
     <>
@@ -111,7 +120,7 @@ const HomePage = () => {
                   <p className="AuthorAndDate ">
                     <span id="authorArticle"> {item.author}</span>
                     <span id="dot2"></span>{" "}
-                    <span id="dateArticle">{item.date}</span>
+                    <span id="dateArticle">{formatTime(item.date)}</span>
                   </p>
                 </div>
               </div>
