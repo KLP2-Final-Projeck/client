@@ -8,8 +8,8 @@ import { BASE_URL } from "../../utils/network";
 function Komentar() {
   const artikelId = useParams().id;
   const userId = localStorage.getItem('id');
-  const [komentar, setKomentar] = useState("");  //Untuk Map Get
-  const [Datakomentar, setDataKomentar] = useState([]);  //Untuk Add Koment
+  const [komentar, setKomentar] = useState("");  
+  const [Datakomentar, setDataKomentar] = useState([]); 
   const [isLoading, setIsLoading] = useState(true);
   const [inputEmail, setInputEmail] = useState("");
   const [nama, setNama] = useState("");

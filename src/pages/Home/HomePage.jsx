@@ -12,8 +12,6 @@ import Footer from "../Footer/Footer";
 import axios from "axios";
 import { BASE_URL } from "../../utils/network";
 
-// import Search from "../Searchpage/Search";
-
 const HomePage = () => {
   const navigate = useNavigate();
   const [artikel, setArtikel] = useState([]);

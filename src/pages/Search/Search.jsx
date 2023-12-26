@@ -1,58 +1,34 @@
 import React, { useState } from "react";
 import "./Search.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import dayjs from "dayjs";
+import "dayjs/locale/id";
 import axios from "axios";
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState([]);
   const navigate = useNavigate();
-
-  // const handleSubmit = async () => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:4002/artikel/?query=${searchValue}`);
-  //     const data = await response.json();
-
-  //     setResult(data);
-  //   } catch (error) {
-  //     console.error("Error fetching search data:", error);
-  //     setResult("error");
-  //   }
-  // };
-
-  // const handleSubmit = async () => {
-  //   try {
-  //     const response = await axios.get(`http://localhost:4002/artikel/search?query=${searchValue}`);
-      
-  //     // Periksa apakah responsenya berhasil (status code 2xx)
-  //     if (response.status !== 200) {
-  //       throw new Error(`HTTP error! Status: ${response.status}`);
-  //     }
-
-  //     setResult(response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching search data:", error);
-  //     setResult("error");
-  //   }
-  // };
+  const { id } = useParams();
+  console.log(result);
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post("http://localhost:4002/artikel", { query: searchValue });
-      
-      if (response.status === 200) {
-        if (Array.isArray(response.data) && response.data.length > 0) {
-          setResult(response.data);
-        } else {
-          setResult([]);
-        }
-      } else {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+      const response = await axios.get(`http://localhost:4002/artikel`);
+      const data = response;
+      setResult(response.data);
+      console.log(response);
     } catch (error) {
       console.error("Error fetching search data:", error);
       setResult("error");
     }
+  };
+
+  const formatTime = (dateTime) => {
+    const indonesianTime = dayjs(dateTime)
+      .locale("id")
+      .format("D MMMM YYYY");
+    return indonesianTime;
   };
 
   return (
@@ -99,7 +75,7 @@ const Search = () => {
           style={{ marginBottom: "6em" }}
           id="articlesContent"
         >
-          {typeof result === "string" ? (
+          {result.length === null ? (
             <div className="wrapperNotFound col-md-6 col-11 mx-auto mb-5 pt-3 pb-5 ps-4 pe-4">
               <p className="titleNotFoundArticle text-dark mb-2">
                 Maaf, kami tidak dapat menemukan apa yang Anda cari.
@@ -114,7 +90,7 @@ const Search = () => {
               </ul>
             </div>
           ) : (
-            result?.map((item) => (
+            result.filter((item) => item.titleArtikel.toLowerCase().includes(searchValue.toLowerCase())).map((item) => (
               <div
                 className="col-12 col-sm-12 col-md-6 col-lg-4 pt-4"
                 key={item.id}
@@ -141,7 +117,7 @@ const Search = () => {
                         {item.author}
                       </span>
                       <span id="dot2"></span>
-                      <span className="date text-secondary">{item.date}</span>
+                      <span className="date text-secondary">{formatTime(item.date)}</span>
                     </p>
                   </div>
                 </div>
