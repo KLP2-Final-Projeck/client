@@ -1,0 +1,20 @@
+.imagesAdmin {
+  width: 100px !important;
+}
+
+.btn:focus,
+btn:active {
+  border: none !important;
+}
+
+.imgArticleAdmin {
+  width: 100%;
+}
+
+.hashTagArticle {
+  color: #006dfd !important;
+}
+
+.paragraf {
+  text-align: justify;
+}

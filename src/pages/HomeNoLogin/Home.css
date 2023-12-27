@@ -1,0 +1,127 @@
+.banner {
+  height: 80vh;
+  background: url(../../assets/banner.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.banner-content {
+  height: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+/* Content */
+
+.titleHighlight1,
+.titleNewArticle,
+.titleHighlight2,
+.titleBtnHighlight2 {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 700;
+}
+
+.subTitleHighlight1,
+.subTitleBtnHighlight2,
+.subTitleHighlight2 {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 400;
+}
+
+.btnHighlight1 {
+  background-color: #14ae5c !important;
+  color: var(--color-bg) !important;
+  padding: 0.6em 3em !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 600;
+}
+
+.btnHighlight1:hover {
+  background-color: #119951 !important;
+}
+
+.lineArticle {
+  width: 6rem;
+  height: 5px;
+  border: 1px solid #14ae5c;
+  border-radius: 4px;
+  background-color: #14ae5c;
+}
+
+#articlesImage {
+  width: 100% !important;
+}
+
+.wrapperLinkTitleArticles {
+  color: black;
+  text-decoration: none;
+  text-decoration-color: black;
+}
+
+.wrapperLinkTitleArticles:hover {
+  color: black;
+  text-decoration: underline;
+  text-decoration-color: black;
+}
+
+.hashTag {
+  color: #006dfd !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 600;
+}
+
+.descArticles {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 400;
+}
+
+.AuthorAndDate {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-weight: 600;
+  color: #6f7376 !important;
+}
+
+#dot {
+  height: 7px;
+  width: 7px;
+  background-color: #006dfd;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 0.5em 0.1em 0.5em;
+}
+
+#dot2 {
+  margin: 0 0.3em 0.1em 0.3em;
+
+  height: 7px;
+  width: 7px;
+  background-color: #6f7376;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+#artikel-lainnya {
+  border: 2px solid #14ae5c !important;
+  color: #14ae5c !important;
+}
+
+#artikel-lainnya:hover {
+  background-color: #14ae5c;
+  border: 2px solid #14ae5c !important;
+  color: #ffffff !important;
+}
+
+.Highlight2 {
+  background-image: url(../../assets/bagi2.jpg);
+  height: auto;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.imgBtnHighlight2 {
+  width: 6.5em;
+  margin-bottom: 1em;
+}
