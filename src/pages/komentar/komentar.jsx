@@ -31,7 +31,7 @@ function Komentar() {
   };
   const getKomentar = async () => {
     try {
-      const response = await axios.get(`http://localhost:4002/comment`);
+      const response = await axios.get(`http://${BASE_URL}/comment`);
       console.log(response);
       setDataKomentar(response.data);
       setIsLoading(false);
@@ -50,7 +50,7 @@ function Komentar() {
 
       if (editingId) {
         await axios.put(
-          `http://localhost:4002/comment/${editingId}`);
+          `http://${BASE_URL}/comment/${editingId}`);
         setEditingId(null);
         Swal.fire({
           position: "top",
@@ -61,7 +61,7 @@ function Komentar() {
         });
       } 
       else {
-        await axios.post("http://localhost:4002/comment");
+        await axios.post("http://${BASE_URL}/comment");
         Swal.fire({
           position: "top",
           icon: "success",
@@ -83,7 +83,7 @@ function Komentar() {
     try {
       const token = localStorage.getItem("accessToken");
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      await axios.delete(`http://localhost:4002/comment/${commentId}`, config);
+      await axios.delete(`http://${BASE_URL}/comment/${commentId}`, config);
 
       Swal.fire({
         position: "top",

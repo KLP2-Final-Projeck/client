@@ -6,6 +6,7 @@ import Navbar from "../Navbar";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer/Footer"
 import axios from "axios";
+import { BASE_URL } from "../../utils/network";
 
 const Donasi = () => {
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ const Donasi = () => {
         throw new Error("Anda harus login terlebih dahulu");
       }
   
-      const response = await axios.post("http://localhost:4002/donasi", {
+      const response = await axios.post(`http://${BASE_URL}/donasi`, {
         ...formData,
         nominalValue: data.nominalValue,
       });
