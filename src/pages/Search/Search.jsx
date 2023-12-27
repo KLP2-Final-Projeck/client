@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/id";
 import axios from "axios";
+import { BASE_URL } from "../../utils/network";
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -14,7 +15,7 @@ const Search = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.get(`http://localhost:4002/artikel`);
+      const response = await axios.get(`http://${BASE_URL}/artikel`);
       const data = response;
       setResult(response.data);
       console.log(response);
