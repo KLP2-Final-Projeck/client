@@ -1,7 +1,7 @@
 import axios from "axios";
 const Swal = require("sweetalert2");
-// const BASE_URL = "103.127.97.117:4002";
-const BASE_URL = `localhost:4002`;
+const BASE_URL = "103.127.97.117:4002";
+// const BASE_URL = `localhost:4002`;
 
 function getAccessToken() {
   return localStorage.getItem("accessToken");
